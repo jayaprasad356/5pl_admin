@@ -1,7 +1,7 @@
 <?php
 
 
-define('DOMAIN_URL', 'https://5pl.graymatterworks.com/'); /* chnage to your domain here - don't forget to add forward slash at the end of the URL like this "/" */
+define('DOMAIN_URL', 'https://admin.5penta.store/'); /* chnage to your domain here - don't forget to add forward slash at the end of the URL like this "/" */
 define('ALLOW_MODIFICATION', 1);
 define('JWT_SECRET_KEY', '12345678'); /* chnage to your secret key here set it to anything you like*/
 define('MAIN_REFER', 'ATN');
@@ -20,13 +20,8 @@ class Database
      //live
     private $db_host = "localhost";  // Change as required
     private $db_user = "u743445510_5pl";  // Change as required
-    private $db_pass = "5Pl@0111";  // Change as required
+    private $db_pass = "Penta@011";  // Change as required
     private $db_name = "u743445510_5pl"; 
-
-    //private $db_host = "localhost";  // Change as required
-    // private $db_user = "root";  // Change as required
-    // private $db_pass = "";  // Change as required
-    //private $db_name = "pocket_farm";    // Change as required
 
     private $con = false; // Check to see if the connection is active
     private $myconn = ""; // This will be our mysqli object
