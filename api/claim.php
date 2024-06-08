@@ -44,6 +44,15 @@ if (empty($user)) {
     echo json_encode($response);
     return;
 }
+
+$dayOfWeek = date('w');
+
+if ($dayOfWeek == 0 || $dayOfWeek == 7) {
+    $response['success'] = false;
+    $response['message'] = "Market Open time From Monday to Saturday";
+    print_r(json_encode($response));
+    return false;
+} 
 $referred_by = $user[0]['referred_by'];
 $c_referred_by = $user[0]['c_referred_by'];
 $d_referred_by = $user[0]['d_referred_by'];
