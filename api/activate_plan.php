@@ -63,6 +63,7 @@ if (empty($plan)) {
 }
 
 $price = $plan[0]['price'];
+$invite_bonus = $plan[0]['invite_bonus'];
 $datetime = date('Y-m-d H:i:s');
 
 
