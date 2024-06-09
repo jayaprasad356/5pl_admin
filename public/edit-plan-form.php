@@ -139,7 +139,7 @@ if (isset($_POST['btnCancel'])) { ?>
 								</div>
 								<div class="col-md-4">
 									<label for="exampleInputEmail1">Per Code Cost</label><i class="text-danger asterik">*</i>
-									<input type="number" class="form-control" name="per_code_cost" value="<?php echo $res[0]['per_code_cost']; ?>">
+									<input type="text" class="form-control" name="per_code_cost" value="<?php echo $res[0]['per_code_cost']; ?>">
 								</div>
                             </div>	 
 						  </div>  
