@@ -46,7 +46,6 @@
                                     <th  data-field="balance" data-sortable="true">Balance</th>
                                     <th  data-field="total_income" data-sortable="true">Total Income</th>
                                     <th data-field="today_income" data-sortable="true">Today Income</th>
-                                    <th  data-field="main_wallet" data-sortable="true">Main Wallet</th>
                                     <th  data-field="earning_wallet" data-sortable="true">Earning Wallet</th>
                                     <th  data-field="bonus_wallet" data-sortable="true">Bonus Wallet</th>
                                     <th data-field="device_id" data-sortable="true">Device ID</th>

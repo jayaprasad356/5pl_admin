@@ -91,7 +91,7 @@ $datetime = date('Y-m-d H:i:s');
                 $sql = "UPDATE users SET bonus_wallet = bonus_wallet + $invite_bonus,team_income = team_income + $invite_bonus  WHERE refer_code = '$referred_by'";
                 $db->sql($sql);
     
-                $sql = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$r_id', '$invite_bonus', '$datetime', 'invite_bonus')";
+                $sql = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$r_id', '$invite_bonus', '$datetime', 'refer_bonus')";
                 $db->sql($sql);
                 
             }
@@ -104,7 +104,7 @@ $datetime = date('Y-m-d H:i:s');
     $sql_insert_user_plan = "INSERT INTO user_plan (user_id,plan_id,joined_date,claim) VALUES ('$user_id','$plan_id','$date',1)";
     $db->sql($sql_insert_user_plan);
 
-    $sql_insert_transaction = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$user_id', '$price', '$datetime', 'start_production')";
+    $sql_insert_transaction = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$user_id', '$price', '$datetime', 'plan_activated')";
     $db->sql($sql_insert_transaction);
 
     $sql_user = "SELECT * FROM users WHERE id = $user_id";
