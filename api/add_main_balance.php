@@ -30,12 +30,6 @@ $datetime = date('Y-m-d H:i:s');
 $user_id=$db->escapeString($_POST['user_id']);
 $wallet_type = $db->escapeString($_POST['wallet_type']);
 
-function isBetween10AMand6PM() {
-    $currentHour = date('H');
-    $startTimestamp = strtotime('10:00:00');
-    $endTimestamp = strtotime('18:00:00');
-    return ($currentHour >= date('H', $startTimestamp)) && ($currentHour < date('H', $endTimestamp));
-}
 
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
 $db->sql($sql);
@@ -50,13 +44,6 @@ if ($num == 1) {
         if ($earning_wallet < 10) {
             $response['success'] = false;
             $response['message'] = "Minimum 10 rs to add";
-            print_r(json_encode($response));
-            return false;
-        }
-
-        if (!isBetween10AMand6PM()) {
-            $response['success'] = false;
-            $response['message'] = "Add Wallet time morning 10:00AM to 6PM";
             print_r(json_encode($response));
             return false;
         }

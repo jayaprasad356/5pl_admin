@@ -137,6 +137,9 @@ $db->connect();
                 $tempRow['registered_datetime'] = $row['registered_datetime'];
                 $tempRow['latitude'] = $row['latitude'];
                 $tempRow['longitude'] = $row['longitude'];
+                $tempRow['earning_wallet'] = $row['earning_wallet'];
+                $tempRow['bonus_wallet'] = $row['bonus_wallet'];
+                $tempRow['main_wallet'] = $row['main_wallet'];
                 if (!empty($row['profile'])) {
                     $tempRow['profile'] = "<a data-lightbox='category' href='" . $row['profile'] . "' data-caption='" . $row['profile'] . "'><img src='" . $row['profile'] . "' title='" . $row['profile'] . "' height='50' /></a>";
                 } else {
@@ -354,40 +357,38 @@ if (isset($_GET['table']) && $_GET['table'] == 'transactions') {
         $order = $db->escapeString($_GET['order']);
     }
    
-    $join = "LEFT JOIN `users` u ON l.user_id = u.id WHERE l.id IS NOT NULL " . $where;
+    $join = "LEFT JOIN `users` u ON l.user_id = u.id  LEFT JOIN `user_plan` up ON l.user_id = up.user_id  LEFT JOIN `plan` p ON up.plan_id = p.id WHERE l.id IS NOT NULL " . $where;
 
-    $sql = "SELECT COUNT(l.id) AS total FROM `transactions` l " . $join;
-    $db->sql($sql);
-    $res = $db->getResult();
-    foreach ($res as $row)
-        $total = $row['total'];
-   
-     $sql = "SELECT l.id AS id,l.*,u.name,u.mobile  FROM `transactions` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
-     $db->sql($sql);
-     $res = $db->getResult();
+        $sql = "SELECT COUNT(l.id) AS total FROM `transactions` l " . $join;
+        $db->sql($sql);
+        $res = $db->getResult();
+        foreach ($res as $row)
+            $total = $row['total'];
 
-    $bulkData = array();
-    $bulkData['total'] = $total;
-    $rows = array();
-    $tempRow = array();
-    foreach ($res as $row) {
-        $tempRow = array();
-        $tempRow['id'] = $row['id'];
-        $tempRow['name'] = $row['name'];
-        $tempRow['mobile'] = $row['mobile'];
-        $tempRow['type'] = $row['type'];
-        $tempRow['amount'] = $row['amount'];
-        $tempRow['ads'] = $row['ads'];
-        $tempRow['datetime'] = $row['datetime'];
-        
-        $rows[] = $tempRow;
-    }
-    $bulkData['rows'] = $rows;
-    print_r(json_encode($bulkData));
-}
+        $sql = "SELECT l.id AS id, l.*, u.name, u.mobile, p.price AS plan_price  FROM `transactions` l " . $join . "  ORDER BY $sort $order  LIMIT $offset, $limit";
+        $db->sql($sql);
+        $res = $db->getResult();
+
+        $bulkData = array();
+        $bulkData['total'] = $total;
+        $rows = array();
+        foreach ($res as $row) {
+            $tempRow = array();
+            $tempRow['id'] = $row['id'];
+            $tempRow['name'] = $row['name'];
+            $tempRow['mobile'] = $row['mobile'];
+            $tempRow['type'] = $row['type'];
+            $tempRow['amount'] = $row['amount'];
+            $tempRow['plan_price'] = $row['plan_price'];
+            $tempRow['datetime'] = $row['datetime'];
+            
+            $rows[] = $tempRow;
+        }
+        $bulkData['rows'] = $rows;
+        print_r(json_encode($bulkData));
+        }
 
 //user plan
-//plan_details
 if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
 
     $offset = 0;
