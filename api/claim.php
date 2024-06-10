@@ -74,7 +74,7 @@ if ($claim == 0) {
     return false;
 }
 
-$sql = "SELECT daily_codes FROM plan WHERE id = $plan_id";
+$sql = "SELECT daily_earnings FROM plan WHERE id = $plan_id";
 $db->sql($sql);
 $plan = $db->getResult();
 
@@ -84,7 +84,7 @@ if (empty($plan)) {
     echo json_encode($response);
     return;
 }
-$daily_income = $plan[0]['daily_codes'];
+$daily_income = $plan[0]['daily_earnings'];
 
 
 $sql = "UPDATE user_plan SET claim = 0,income = income + $daily_income WHERE plan_id = $plan_id AND user_id = $user_id";
