@@ -117,7 +117,7 @@ $datetime = date('Y-m-d H:i:s');
     }
     else {
         $response['success'] = false;
-        $response['message'] = "Insufficient balance to start this plan";
+        $response['message'] = "Your Recharge Balance Is Low. Please Click On Recharge Icon To Purchase Your Plan";
     }
 print_r(json_encode($response));
 ?>
