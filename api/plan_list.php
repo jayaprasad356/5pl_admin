@@ -55,11 +55,6 @@ if ($num >= 1) {
         $db->sql($sql_check_plan);
         $plan_exists = $db->numRows() > 0;
         $temp['status'] = $plan_exists ? 1 : 0;
-
-        $sql_check_plan_activated = "SELECT * FROM user_plan WHERE plan_id = $plan_id";
-        $db->sql($sql_check_plan_activated);
-        $plan_activated = $db->numRows() > 0;
-        $temp['plan_activated'] = $plan_activated ? 1 : 0;
         
         $rows[] = $temp;
     }
