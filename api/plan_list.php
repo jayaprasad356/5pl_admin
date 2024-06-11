@@ -54,7 +54,7 @@ if ($num >= 1) {
         $sql_check_plan = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = $plan_id";
         $db->sql($sql_check_plan);
         $plan_exists = $db->numRows() > 0;
-        $temp['status'] = $plan_exists ? 0 : 1;
+        $temp['status'] = $plan_exists ? 1: 0;
         
         $rows[] = $temp;
     }
