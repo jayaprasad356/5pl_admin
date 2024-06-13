@@ -138,7 +138,7 @@ include "header.php";
                     <div class="small-box bg-yellow">
                         <div class="inner">
                             <h3><?php
-                             $sql = "SELECT COUNT(id) AS count  FROM users WHERE today_income > 0 AND valid = 1";
+                             $sql = "SELECT COUNT(id) AS count  FROM user_plan WHERE plan_id != 1 ";
                              $db->sql($sql);
                              $res = $db->getResult();
                              $count = $res[0]['count'];

@@ -28,6 +28,9 @@ if (isset($_POST['btnPaid']) && isset($_POST['enable']) && isset($_POST['price']
             $db->sql($sql_query);
         }
     }
+       // JavaScript redirection after processing
+       echo '<script>window.location.href = "recharge.php";</script>';
+       exit; // Ensure that script execution stops after echoing JavaScript
 }
 
 if (isset($_POST['btnCancel']) && isset($_POST['enable'])) {
@@ -37,6 +40,9 @@ if (isset($_POST['btnCancel']) && isset($_POST['enable'])) {
         $db->sql($sql);
         $result = $db->getResult();
     }
+       // JavaScript redirection after processing
+       echo '<script>window.location.href = "recharge.php";</script>';
+       exit; // Ensure that script execution stops after echoing JavaScript
 }
 ?>
 
@@ -45,7 +51,7 @@ if (isset($_POST['btnCancel']) && isset($_POST['enable'])) {
 </section>
 
 <section class="content">
-<form name="recharge_form" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+<form action="recharge.php" name="recharge_form" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
     <div class="row">
         <div class="col-xs-12">
             <div class="box">

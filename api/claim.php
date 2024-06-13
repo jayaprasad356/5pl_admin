@@ -45,6 +45,20 @@ if (empty($user)) {
     return;
 }
 
+$sql = "SELECT * FROM settings WHERE id=1";
+$db->sql($sql);
+$result = $db->getResult();
+$income_status = $result[0]['income_status'];
+
+
+if ($income_status == 0) {
+    $response['success'] = false;
+    $response['message'] = "Today Holiday";
+    print_r(json_encode($response));
+    return false;
+}
+
+
 $dayOfWeek = date('w');
 
 if ($dayOfWeek == 0 || $dayOfWeek == 7) {
