@@ -323,7 +323,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'transactions') {
     $sort = 'date';
     $order = 'DESC';
     
-    if ((isset($_GET['type']) && $_GET['type'] != '')) {
+    if (isset($_GET['type']) && $_GET['type'] != '') {
         $type = $db->escapeString($fn->xss_clean($_GET['type']));
         $where .= " AND l.type = '$type'";
     }
@@ -333,6 +333,12 @@ if (isset($_GET['table']) && $_GET['table'] == 'transactions') {
         $formatted_date = date('Y-m-d', strtotime($selected_date));
         $where .= " AND DATE(l.datetime) = '$formatted_date'";
     }
+
+    if (isset($_GET['price']) && $_GET['price'] != '') {
+        $price = $db->escapeString($fn->xss_clean($_GET['price']));
+        $where .= " AND p.price = '$price'";
+    }
+    
     if (isset($_GET['offset']))
         $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
     if (isset($_GET['limit']))
@@ -343,50 +349,46 @@ if (isset($_GET['table']) && $_GET['table'] == 'transactions') {
     if (isset($_GET['order']))
         $order = $db->escapeString($fn->xss_clean($_GET['order']));
 
-       
-
-        if (isset($_GET['search']) && !empty($_GET['search'])) {
-            $search = $db->escapeString($fn->xss_clean($_GET['search']));
-            $where .= "AND (u.mobile LIKE '%" . $search . "%' OR u.name LIKE '%" . $search . "%') ";
-        }
-        
-    if (isset($_GET['sort'])) {
-        $sort = $db->escapeString($_GET['sort']);
-    }
-    if (isset($_GET['order'])) {
-        $order = $db->escapeString($_GET['order']);
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= " AND (u.mobile LIKE '%" . $search . "%' OR u.name LIKE '%" . $search . "%') ";
     }
    
-    $join = "LEFT JOIN `users` u ON l.user_id = u.id  LEFT JOIN `user_plan` up ON l.user_id = up.user_id  LEFT JOIN `plan` p ON up.plan_id = p.id WHERE l.id IS NOT NULL " . $where;
+    $join = "LEFT JOIN `users` u ON l.user_id = u.id 
+             LEFT JOIN `user_plan` up ON u.id = up.user_id 
+             LEFT JOIN `plan` p ON up.plan_id = p.id 
+             WHERE l.id IS NOT NULL " . $where;
 
-        $sql = "SELECT COUNT(l.id) AS total FROM `transactions` l " . $join;
-        $db->sql($sql);
-        $res = $db->getResult();
-        foreach ($res as $row)
-            $total = $row['total'];
+    $sql = "SELECT COUNT(l.id) AS total FROM `transactions` l " . $join;
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
+   
+    $sql = "SELECT l.id AS id, l.*, u.name, u.mobile, p.price FROM `transactions` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
+    $db->sql($sql);
+    $res = $db->getResult();
 
-        $sql = "SELECT l.id AS id, l.*, u.name, u.mobile, p.price AS plan_price  FROM `transactions` l " . $join . "  ORDER BY $sort $order  LIMIT $offset, $limit";
-        $db->sql($sql);
-        $res = $db->getResult();
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    $rows = array();
+    foreach ($res as $row) {
+        $tempRow = array();
+        $tempRow['id'] = $row['id'];
+        $tempRow['name'] = $row['name'];
+        $tempRow['mobile'] = $row['mobile'];
+        $tempRow['type'] = $row['type'];
+        $tempRow['amount'] = $row['amount'];
+        $tempRow['datetime'] = $row['datetime'];
+        $tempRow['price'] = $row['price'];
+        
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
 
-        $bulkData = array();
-        $bulkData['total'] = $total;
-        $rows = array();
-        foreach ($res as $row) {
-            $tempRow = array();
-            $tempRow['id'] = $row['id'];
-            $tempRow['name'] = $row['name'];
-            $tempRow['mobile'] = $row['mobile'];
-            $tempRow['type'] = $row['type'];
-            $tempRow['amount'] = $row['amount'];
-            $tempRow['plan_price'] = $row['plan_price'];
-            $tempRow['datetime'] = $row['datetime'];
-            
-            $rows[] = $tempRow;
-        }
-        $bulkData['rows'] = $rows;
-        print_r(json_encode($bulkData));
-        }
+
 
 //user plan
 if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
