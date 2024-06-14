@@ -418,7 +418,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
 
         if (isset($_GET['search']) && !empty($_GET['search'])) {
             $search = $db->escapeString($_GET['search']);
-            $where .= " AND (u.id LIKE '%" . $search . "%' OR u.name LIKE '%" . $search . "%' OR p.products LIKE '%" . $search . "%'  OR u.mobile LIKE '%" . $search . "%')";
+            $where .= " AND (u.id LIKE '%" . $search . "%' OR u.name LIKE '%" . $search ."%'  OR u.mobile LIKE '%" . $search . "%')";
         }
         $join = "LEFT JOIN `users` u ON l.user_id = u.id LEFT JOIN `plan` p ON l.plan_id = p.id WHERE l.id IS NOT NULL " . $where;
 
