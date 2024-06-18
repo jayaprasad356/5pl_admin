@@ -3,16 +3,17 @@
     <h1>User Plan /<small><a href="home.php"><i class="fa fa-home"></i> Home</a></small></h1>
   
 </section>
-    <!-- Main content -->
-    <section class="content">
-        <!-- Main row -->
-        <div class="row">
-            <!-- Left col -->
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                    <div class="row">
-                    <div class="form-group col-md-3">
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                 <div class="col-md-12">
+                <form action="export-user_plan.php">
+                            <button type='submit'  class="btn btn-primary"><i class="fa fa-download"></i> Export User Plan</button>
+                        </form>
+                        </div>
+                    <div class="form-group col-md-3"><br>
                          <h4 class="box-title">Filter by Plan</h4>
                           <select id='name' name="name" class='form-control'>
                           <option value=''>Select All</option>
@@ -26,7 +27,7 @@
                                <?php } ?>
                              </select>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-3"><br>
                                 <h4 class="box-title">Joined Date </h4>
                                 <input type="date" class="form-control" id="joined_date" name="joined_date" value="<?php echo (isset($_GET['basic_joined_date'])) ? $_GET['basic_joined_date'] : "" ?>"></input>
                         </div>

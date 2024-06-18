@@ -11,11 +11,16 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                <div class="col-md-3">
+                 <div class="col-md-12">
+                <form action="export-users.php">
+                            <button type='submit'  class="btn btn-primary"><i class="fa fa-download"></i> Export Users</button>
+                        </form>
+                        </div>
+                <div class="col-md-3"><br>
                         <h4 class="box-title">Referred By</h4>
                             <input type="text" class="form-control" name="referred_by" id="referred_by" >
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3"><br>
                         <h4 class="box-title">Filter by Profile</h4>
                         <select id="profile" name="profile" class="form-control">
                             <option value="">All</option>
