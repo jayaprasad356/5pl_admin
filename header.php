@@ -217,6 +217,12 @@ if ($_SESSION['role'] == 'admin') {
                         <span>App Update</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="notifications.php">
+                        <i class="fa fa-bell"></i>
+                        <span>Notifications</span>
+                    </a>
+                </li>
                 <?php } ?>
                 <li class="treeview">
                     <a href="recharge.php">
