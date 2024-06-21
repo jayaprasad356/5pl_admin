@@ -17,19 +17,24 @@ FROM users u JOIN  withdrawals w ON u.id = w.user_id AND w.status = 0";
     $developer_records = $db->getResult();
 
 	
-	$filename = "unpaid-withdrawals-data".date('Ymd') . ".xls";			
-	header("Content-Type: application/vnd.ms-excel");
-	header("Content-Disposition: attachment; filename=\"$filename\"");	
-	$show_coloumn = false;
-	if(!empty($developer_records)) {
-	  foreach($developer_records as $record) {
-		if(!$show_coloumn) {
-		  // display field/column names in first row
-		  echo implode("\t", array_keys($record)) . "\n";
-		  $show_coloumn = true;
+	$filename = "UnPaidWithdrawals-data" . date('Ymd') . ".csv";
+	header("Content-Type: text/csv");
+	header("Content-Disposition: attachment; filename=\"$filename\"");
+	header("Pragma: no-cache");
+	header("Expires: 0");
+	
+	$output = fopen('php://output', 'w');
+	
+	if (!empty($developer_records)) {
+		// Get the keys from the first record to create the header row
+		fputcsv($output, array_keys($developer_records[0]));
+		
+		// Output the data
+		foreach ($developer_records as $record) {
+			fputcsv($output, $record);
 		}
-		echo implode("\t", array_values($record)) . "\n";
-	  }
 	}
-	exit;  
-?>
+	
+	fclose($output);
+	exit;
+	?>

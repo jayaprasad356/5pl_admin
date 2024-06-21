@@ -12,24 +12,24 @@ $sql_query = "SELECT up.user_id, u.name AS user_name, u.mobile, up.plan_id, p.na
 $db->sql($sql_query);
 $developer_records = $db->getResult();
 
-$filename = "AllUserPlan-data" . date('Ymd') . ".xls";
-header("Content-Type: application/vnd.ms-excel");
+$filename = "AllUsers-data" . date('Ymd') . ".csv";
+header("Content-Type: text/csv");
 header("Content-Disposition: attachment; filename=\"$filename\"");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-$show_column = false;
+$output = fopen('php://output', 'w');
 
 if (!empty($developer_records)) {
+    // Get the keys from the first record to create the header row
+    fputcsv($output, array_keys($developer_records[0]));
+    
+    // Output the data
     foreach ($developer_records as $record) {
-        if (!$show_column) {
-            // display field/column names in the first row
-            echo implode("\t", array_keys($record)) . "\n";
-            $show_column = true;
-        }
-        echo implode("\t", array_values($record)) . "\n";
+        fputcsv($output, $record);
     }
 }
 
+fclose($output);
 exit;
 ?>
