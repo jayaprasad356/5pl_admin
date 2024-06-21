@@ -6,8 +6,13 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
+                <div class="col-md-12">
+                <form action="export-transaction.php">
+                            <button type='submit'  class="btn btn-primary"><i class="fa fa-download"></i> Export Transactions</button>
+                        </form>
+                        </div>
                     <div class="row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3"><br>
                             <h4 class="box-title">Filter by Type </h4>
                             <select id='type' name="type" class='form-control'>
                                 <?php
@@ -20,7 +25,7 @@
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3"><br>
                             <h4 class="box-title">Filter by Plan </h4>
                             <select id='price' name="price" class='form-control'>
                                 <?php
@@ -33,7 +38,7 @@
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2"><br>
                             <h4 class="box-title">Filter by Date </h4>
                             <input type="date" class="form-control" id="date" name="date" value="<?php echo (isset($_GET['date'])) ? $_GET['date'] : "" ?>"></input>
                         </div>
