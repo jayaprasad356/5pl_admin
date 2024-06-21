@@ -12,7 +12,7 @@ $sql_query = "SELECT up.user_id, u.name AS user_name, u.mobile, up.plan_id, p.na
 $db->sql($sql_query);
 $developer_records = $db->getResult();
 
-$filename = "AllUsers-data" . date('Ymd') . ".csv";
+$filename = "AllUserPlan-data" . date('Ymd') . ".csv";
 header("Content-Type: text/csv");
 header("Content-Disposition: attachment; filename=\"$filename\"");
 header("Pragma: no-cache");
