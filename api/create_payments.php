@@ -11,9 +11,22 @@ include_once('../includes/crud.php');
 $db = new Database();
 $db->connect();
 
+
+if (empty($_POST['mobile'])) {
+    $response['success'] = false;
+    $response['message'] = "Mobile is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 if (empty($_POST['order_id'])) {
     $response['success'] = false;
     $response['message'] = "Order Id is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['category_id'])) {
+    $response['success'] = false;
+    $response['message'] = "Category ID is Empty";
     print_r(json_encode($response));
     return false;
 }
@@ -33,6 +46,8 @@ if (empty($_POST['datetime'])) {
 $datetime = $db->escapeString($_POST['datetime']);
 $order_id = $db->escapeString($_POST['order_id']);
 $amount = $db->escapeString($_POST['amount']);
+$mobile = $db->escapeString($_POST['mobile']);
+$category_id = $db->escapeString($_POST['category_id']);
 
 $sql = "SELECT * FROM `payments` WHERE order_id = '$order_id'";
 $db->sql($sql);
@@ -45,7 +60,7 @@ if ($res) {
     return false;
 }
 
-$sql = "INSERT INTO `payments` (order_id, amount, datetime, claim) VALUES ('$order_id', '$amount', '$datetime', 0)";
+$sql = "INSERT INTO `payments` (order_id, category_id, mobile, amount, datetime, claim) VALUES ('$order_id','$category_id','$mobile', '$amount', '$datetime', 0)";
 $db->sql($sql);
 $res = $db->getResult();
 $response['success'] = true;
