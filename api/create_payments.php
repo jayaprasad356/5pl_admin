@@ -23,22 +23,31 @@ if (empty($_POST['amount'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['date'])) {
+if (empty($_POST['datetime'])) {
     $response['success'] = false;
-    $response['message'] = "Date is Empty";
+    $response['message'] = "Datetime is Empty";
     print_r(json_encode($response));
     return false;
 }
 
-$datetime = $db->escapeString($_POST['date']);
+$datetime = $db->escapeString($_POST['datetime']);
 $order_id = $db->escapeString($_POST['order_id']);
 $amount = $db->escapeString($_POST['amount']);
 
-    $sql = "INSERT INTO `payments` (order_id, amount, datetime,claim) VALUES ('$order_id', '$amount', '$datetime', 0)";
-    $db->sql($sql);
-    $res = $db->getResult();
-    $response['success'] = true;
-    $response['message'] = "Payments added Successfully";
-    print_r(json_encode($response));
+$sql = "SELECT * FROM `payments` WHERE order_id = '$order_id'";
+$db->sql($sql);
+$res = $db->getResult();
 
-?>
+if ($res) {
+    $response['success'] = false;
+    $response['message'] = "Order Id already exists";
+    print_r(json_encode($response));
+    return false;
+}
+
+$sql = "INSERT INTO `payments` (order_id, amount, datetime, claim) VALUES ('$order_id', '$amount', '$datetime', 0)";
+$db->sql($sql);
+$res = $db->getResult();
+$response['success'] = true;
+$response['message'] = "Payments added Successfully";
+print_r(json_encode($response));
