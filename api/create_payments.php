@@ -24,9 +24,9 @@ if (empty($_POST['order_id'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['category_id'])) {
+if (empty($_POST['product_id'])) {
     $response['success'] = false;
-    $response['message'] = "Category ID is Empty";
+    $response['message'] = "Product ID is Empty";
     print_r(json_encode($response));
     return false;
 }
@@ -47,7 +47,7 @@ $datetime = $db->escapeString($_POST['datetime']);
 $order_id = $db->escapeString($_POST['order_id']);
 $amount = $db->escapeString($_POST['amount']);
 $mobile = $db->escapeString($_POST['mobile']);
-$category_id = $db->escapeString($_POST['category_id']);
+$product_id = $db->escapeString($_POST['product_id']);
 
 $sql = "SELECT * FROM `payments` WHERE order_id = '$order_id'";
 $db->sql($sql);
@@ -60,9 +60,9 @@ if ($res) {
     return false;
 }
 
-$sql = "INSERT INTO `payments` (order_id, category_id, mobile, amount, datetime, claim) VALUES ('$order_id','$category_id','$mobile', '$amount', '$datetime', 0)";
+$sql = "INSERT INTO `payments` (order_id, product_id, mobile, amount, datetime, claim) VALUES ('$order_id','$product_id','$mobile', '$amount', '$datetime', 0)";
 $db->sql($sql);
 $res = $db->getResult();
 $response['success'] = true;
-$response['message'] = "Payments added Successfully";
+$response['message'] = "Order added Successfully";
 print_r(json_encode($response));
