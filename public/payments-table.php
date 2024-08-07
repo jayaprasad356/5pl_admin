@@ -18,6 +18,7 @@
                         }'>
                         <thead>
                                 <tr>
+                                <th  data-field="operate" data-events="actionEvents">Action</th>
                                     <th  data-field="id" data-sortable="true">ID</th>
                                     <th  data-field="mobile" data-sortable="true">Mobile</th>
                                     <th  data-field="order_id" data-sortable="true">Order ID</th>
@@ -25,7 +26,6 @@
                                     <th  data-field="amount" data-sortable="true">Amount</th>
                                     <th  data-field="claim" data-sortable="true">Claim</th>
                                     <th  data-field="datetime" data-sortable="true">DateTime</th>
-                                    <th  data-field="operate" data-events="actionEvents">Action</th>
                                 </tr>
                             </thead>
                         </table>
