@@ -287,6 +287,12 @@ if ($_SESSION['role'] == 'admin') {
                         <span>Video</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="payments.php">
+                    <i class="fas fa-money"></i>
+                        <span>Payments</span>
+                    </a>
+                </li>
                 <?php } ?>
             </section>
             <!-- /.sidebar -->
