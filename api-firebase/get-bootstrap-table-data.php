@@ -1290,7 +1290,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'payments') {
     foreach ($res as $row) {
 
         
-       // $operate = ' <a href="edit-otp.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
+        //$operate = ' <a href="edit-payments.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
         $operate = ' <a class="text text-danger" href="delete-payments.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
         $tempRow['id'] = $row['id'];
         $tempRow['mobile'] = $row['mobile'];
