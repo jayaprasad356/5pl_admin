@@ -23,6 +23,7 @@ if (empty($_POST['order_id'])) {
     echo json_encode($response);
     return;
 }
+
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User Id is Empty";
@@ -32,6 +33,7 @@ if (empty($_POST['user_id'])) {
 
 $order_id = $db->escapeString($_POST['order_id']);
 $user_id = $db->escapeString($_POST['user_id']);
+$type = isset($_POST['type']) ? $db->escapeString($_POST['type']) : null;
 
 $sql = "SELECT * FROM users WHERE id = '$user_id'";
 $db->sql($sql);
@@ -44,7 +46,29 @@ if (empty($user)) {
     return;
 }
 
-$sql = "SELECT claim,amount FROM payments WHERE order_id = '$order_id'";
+    $sql = "SELECT product_id FROM payments WHERE order_id = '$order_id'";
+    $db->sql($sql);
+    $payments = $db->getResult();
+
+    if (empty($payments)) {
+        $response['success'] = false;
+        $response['message'] = "Invalid Order Id";
+        echo json_encode($response);
+        return;
+    }
+
+    $product_id = json_decode($payments[0]['product_id']);
+    $valid_product_ids = [31358445, 31358453, 31358470, 31432421];
+
+    if (array_intersect($product_id, $valid_product_ids) === []) {
+        $response['success'] = false;
+        $response['message'] = "Product not found";
+        echo json_encode($response);
+        return;
+    }
+
+
+$sql = "SELECT claim, amount FROM payments WHERE order_id = '$order_id'";
 $db->sql($sql);
 $payments = $db->getResult();
 
