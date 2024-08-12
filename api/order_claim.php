@@ -99,6 +99,6 @@ $sql = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$use
 $db->sql($sql);
 
 $response['success'] = true;
-$response['message'] = "Payments Completed Successfully";
+$response['message'] = "Your Amount Added to your wallet";
 echo json_encode($response);
 ?>
