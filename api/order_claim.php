@@ -14,10 +14,10 @@ $db = new Database();
 $db->connect();
 $fn = new custom_functions;
 
-$response['success'] = false;
-$response['message'] = "DISABLED";
-echo json_encode($response);
-return;
+// $response['success'] = false;
+// $response['message'] = "DISABLED";
+// echo json_encode($response);
+// return;
 
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
