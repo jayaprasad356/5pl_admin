@@ -24,6 +24,7 @@ if ($num >= 1){
         $temp['id'] = $row['id'];
         $temp['whatsapp_group'] = $row['whatsapp_group'];
         $temp['telegram_channel'] = $row['telegram_channel'];
+        $temp['income_status'] = $row['income_status'];
         $temp['max_withdrawal'] = $row['max_withdrawal'];
         $temp['min_withdrawal'] = $row['min_withdrawal'];
         $temp['withdrawal_ins'] = $row['withdrawal_ins'];
