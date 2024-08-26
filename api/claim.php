@@ -67,6 +67,7 @@ if ($dayOfWeek == 0 || $dayOfWeek == 7) {
     print_r(json_encode($response));
     return false;
 } 
+
 $referred_by = $user[0]['referred_by'];
 $c_referred_by = $user[0]['c_referred_by'];
 $d_referred_by = $user[0]['d_referred_by'];
@@ -79,6 +80,7 @@ if (empty($user_plan)) {
     echo json_encode($response);
     return;
 }
+
 $claim = $user_plan[0]['claim'];
 
 if ($claim == 0) {
@@ -86,6 +88,20 @@ if ($claim == 0) {
     $response['message'] = "You already claimed this plan";
     print_r(json_encode($response));
     return false;
+}
+
+if ($plan_id == 1) {
+    $joined_date = $user_plan[0]['joined_date'];
+    $current_date = new DateTime($datetime);
+    $plan_joined_date = new DateTime($joined_date);
+    $interval = $current_date->diff($plan_joined_date);
+
+    if ($interval->days > 30) {
+        $response['success'] = false;
+        $response['message'] = "Your plan has ended";
+        echo json_encode($response);
+        return;
+    }
 }
 
 $sql = "SELECT daily_earnings FROM plan WHERE id = $plan_id";
