@@ -20,11 +20,12 @@ if (empty($_POST['name'])) {
 }
 if (empty($_POST['mobile'])) {
     $response['success'] = false;
-    $response['message'] = "Mobilenumber is Empty";
+    $response['message'] = "Mobile number is Empty";
     print_r(json_encode($response));
     return false;
 }
-/// Remove any non-numeric characters from the mobile number
+
+// Remove any non-numeric characters from the mobile number
 $mobileNumber = preg_replace('/[^0-9]/', '', $_POST['mobile']);
 
 // Check if the mobile number starts with '0'
@@ -43,12 +44,6 @@ if (strlen($mobileNumber) !== 10) {
     return false;
 }
 
-/*if (empty($_POST['device_id'])) {
-    $response['success'] = false;
-    $response['message'] = "Device Id is Empty";
-    print_r(json_encode($response));
-    return false;
-}*/
 if (empty($_POST['age'])) {
     $response['success'] = false;
     $response['message'] = "Age is Empty";
@@ -73,31 +68,31 @@ if (empty($_POST['state'])) {
     print_r(json_encode($response));
     return false;
 }
-
+if (empty($_POST['referred_by'])) {
+    $response['success'] = false;
+    $response['message'] = "Referred By is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 
 $name = $db->escapeString($_POST['name']);
 $mobile = $db->escapeString($_POST['mobile']);
-//$referred_by = (isset($_POST['referred_by']) && !empty($_POST['referred_by'])) ? $db->escapeString($_POST['referred_by']) : "";
-//$device_id = $db->escapeString($_POST['device_id']);
 $age = $db->escapeString($_POST['age']);
 $city = $db->escapeString($_POST['city']);
 $email = $db->escapeString($_POST['email']);
 $state = $db->escapeString($_POST['state']);
-// Set default referred_by value to '5PL' if not provided
-$referred_by = isset($_POST['referred_by']) && !empty($_POST['referred_by']) ? $db->escapeString($_POST['referred_by']) : '5PL';
+$referred_by = $db->escapeString($_POST['referred_by']);
 $c_referred_by = '';
 $d_referred_by = '';
 
-// Check for the validity of referred_by only if it's provided
-if (!empty($_POST['referred_by'])) {
-    $referred_by = $db->escapeString($_POST['referred_by']);
+if ($referred_by !== '5PL') {
     $sql = "SELECT id FROM users WHERE refer_code='$referred_by'";
     $db->sql($sql);
     $res = $db->getResult();
     $num = $db->numRows($res);
     if ($num == 0) {
         $response['success'] = false;
-        $response['message'] ="Invalid Referred By";
+        $response['message'] = "Invalid Referred By";
         print_r(json_encode($response));
         return false;
     }
@@ -110,11 +105,11 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1) {
     $response['success'] = false;
-    $response['message'] ="Mobile Number Already Registered";
+    $response['message'] = "Mobile Number Already Registered";
     print_r(json_encode($response));
     return false;
 } else {
-    if (!empty($_POST['referred_by'])) {
+    if ($referred_by !== '5PL') {
         $sql = "SELECT id,referred_by FROM users WHERE refer_code = '$referred_by' AND refer_code != ''";
         $db->sql($sql);
         $refres = $db->getResult();
@@ -143,20 +138,20 @@ if ($num >= 1) {
             }
         }
     }
-    
-    // Generating refer code based on user ID
+
+    // Insert user data
     $sql = "INSERT INTO users (`mobile`,`name`,`referred_by`,`c_referred_by`,`d_referred_by`,`age`,`city`,`email`,`state`,`registered_datetime`) VALUES ('$mobile','$name','$referred_by','$c_referred_by','$d_referred_by','$age','$city','$email','$state','$datetime')";
     $db->sql($sql);
-    
+
     // Get the ID of the inserted user
     $sql = "SELECT id FROM users WHERE mobile = '$mobile'";
     $db->sql($sql);
     $res = $db->getResult();
     $userId = $res[0]['id'];
-    
+
     // Generate refer code based on user ID
     $refer_code = 'PL' . str_pad($userId, 2, '0', STR_PAD_LEFT);
-    
+
     // Update the refer code for the user
     $sql = "UPDATE users SET refer_code = '$refer_code' WHERE id = '$userId'";
     $db->sql($sql);
