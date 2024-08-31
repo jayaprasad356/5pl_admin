@@ -61,7 +61,12 @@ if (empty($plan)) {
     print_r(json_encode($response));
     return false;
 }
-
+if ($plan_id == 2) {
+    $response['success'] = false;
+    $response['message'] = "This job is not available";
+    print_r(json_encode($response));
+    return false;
+}
 $price = $plan[0]['price'];
 $invite_bonus = $plan[0]['invite_bonus'];
 $datetime = date('Y-m-d H:i:s');
