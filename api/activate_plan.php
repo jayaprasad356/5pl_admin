@@ -68,8 +68,106 @@ if ($plan_id == 2) {
     return false;
 }
 $price = $plan[0]['price'];
+$min_refers = $plan[0]['min_refers'];
 $invite_bonus = $plan[0]['invite_bonus'];
 $datetime = date('Y-m-d H:i:s');
+
+if ($plan_id == 6) {
+    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 50";
+    $db->sql($sql_check);
+    $check_refer_user = $db->getResult();
+
+    if ($check_refer_user[0]['count'] < 3) {
+        $response['success'] = false;
+        $response['message'] = "You need to refer at least $min_refers members in associate job";
+        print_r(json_encode($response));
+        return false;
+    }
+
+    $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = 2";
+    $db->sql($sql_check);
+    $check_user = $db->getResult();
+
+    if (empty($check_user)) {
+        $response['success'] = false;
+        $response['message'] = "You must join in Associate Job";
+        print_r(json_encode($response));
+        return false;
+    }
+}   
+
+if ($plan_id == 7) {
+    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 300";
+    $db->sql($sql_check);
+    $check_refer_user = $db->getResult();
+
+    if ($check_refer_user[0]['count'] < 3) {
+        $response['success'] = false;
+        $response['message'] = "You need to refer at least $min_refers members in associate job";
+        print_r(json_encode($response));
+        return false;
+    }
+    
+    $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = 3";
+    $db->sql($sql_check);
+    $check_user = $db->getResult();
+
+    if (empty($check_user)) {
+        $response['success'] = false;
+        $response['message'] = "You must join in Supervisor Job";
+        print_r(json_encode($response));
+        return false;
+    }
+}   
+
+if ($plan_id == 8) {
+    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 500";
+    $db->sql($sql_check);
+    $check_refer_user = $db->getResult();
+
+    if ($check_refer_user[0]['count'] < 3) {
+        $response['success'] = false;
+        $response['message'] = "You need to refer at least $min_refers members in associate job";
+        print_r(json_encode($response));
+        return false;
+    }
+    
+    $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = 4";
+    $db->sql($sql_check);
+    $check_user = $db->getResult();
+
+    if (empty($check_user)) {
+        $response['success'] = false;
+        $response['message'] = "You must join in Asst Manager Job";
+        print_r(json_encode($response));
+        return false;
+    }
+}   
+
+if ($plan_id == 9) {
+    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 1000";
+    $db->sql($sql_check);
+    $check_refer_user = $db->getResult();
+
+    if ($check_refer_user[0]['count'] < 3) {
+        $response['success'] = false;
+        $response['message'] = "You need to refer at least $min_refers members in associate job";
+        print_r(json_encode($response));
+        return false;
+    }
+    
+    $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = 5";
+    $db->sql($sql_check);
+    $check_user = $db->getResult();
+
+    if (empty($check_user)) {
+        $response['success'] = false;
+        $response['message'] = "You must join in Manager Job";
+        print_r(json_encode($response));
+        return false;
+    }
+} 
+
 
 
     $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = $plan_id";

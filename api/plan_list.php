@@ -20,8 +20,9 @@ if (empty($_POST['user_id'])) {
 }
 
 $user_id = $db->escapeString($_POST['user_id']);
+$type = isset($_POST['type']) ? $db->escapeString($_POST['type']) : 'jobs';
 
-$sql = "SELECT * FROM users WHERE id = $user_id ";
+$sql = "SELECT * FROM users WHERE id = $user_id";
 $db->sql($sql);
 $user = $db->getResult();
 
@@ -32,7 +33,7 @@ if (empty($user)) {
     return false;
 }
 
-$sql = "SELECT * FROM plan";
+$sql = "SELECT * FROM plan WHERE type = '$type'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
@@ -49,6 +50,8 @@ if ($num >= 1) {
         $temp['daily_earnings'] = $row['daily_earnings'];
         $temp['per_code_cost'] = $row['per_code_cost'];
         $temp['price'] = $row['price'];
+        $temp['type'] = $row['type'];
+        $temp['min_refers'] = $row['min_refers'];
         
         $plan_id = $row['id'];
         $sql_check_plan = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = $plan_id";

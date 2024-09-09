@@ -208,6 +208,8 @@ $db->connect();
                 $tempRow['daily_codes'] = $row['daily_codes'];
                 $tempRow['daily_earnings'] = $row['daily_earnings'];
                 $tempRow['price'] = $row['price'];
+                $tempRow['type'] = $row['type'];
+                $tempRow['min_refers'] = $row['min_refers'];
                 if(!empty($row['image'])){
                     $tempRow['image'] = "<a data-lightbox='category' href='" . $row['image'] . "' data-caption='" . $row['image'] . "'><img src='" . $row['image'] . "' title='" . $row['image'] . "' height='50' /></a>";
         

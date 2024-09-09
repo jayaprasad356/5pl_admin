@@ -22,8 +22,10 @@ if (isset($_POST['btnEdit'])) {
 	$per_code_cost = $db->escapeString(($_POST['per_code_cost']));
 	$daily_earnings = $db->escapeString(($_POST['daily_earnings']));
 	$price = $db->escapeString(($_POST['price']));
+	$type = $db->escapeString(($_POST['type']));
+	$min_refers = $db->escapeString(($_POST['min_refers']));
     
-		$sql_query = "UPDATE plan SET name='$name',description='$description',demo_video='$demo_video',daily_codes='$daily_codes',per_code_cost='$per_code_cost',price='$price',daily_earnings='$daily_earnings' WHERE id =  $ID";
+		$sql_query = "UPDATE plan SET name='$name',description='$description',demo_video='$demo_video',daily_codes='$daily_codes',per_code_cost='$per_code_cost',price='$price',daily_earnings='$daily_earnings',type = '$type',min_refers = '$min_refers' WHERE id =  $ID";
 		$db->sql($sql_query);
 		$result = $db->getResult();             
 		if (!empty($result)) {
@@ -128,21 +130,36 @@ if (isset($_POST['btnCancel'])) { ?>
                          <br>
 						 <div class="row">
                             <div class="form-group">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="exampleInputFile">Image</label> <i class="text-danger asterik">*</i><?php echo isset($error['image']) ? $error['image'] : ''; ?>
                                     <input type="file" name="image" onchange="readURL(this);" accept="image/png, image/jpeg" id="image" /><br>
                                     <img id="blah" src="<?php echo $res[0]['image']; ?>" alt="" width="150" height="200" <?php echo empty($res[0]['image']) ? 'style="display: none;"' : ''; ?> />
                                 </div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<label for="exampleInputEmail1">Daily Codes</label><i class="text-danger asterik">*</i>
 									<input type="number" class="form-control" name="daily_codes" value="<?php echo $res[0]['daily_codes']; ?>">
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<label for="exampleInputEmail1">Per Code Cost</label><i class="text-danger asterik">*</i>
 									<input type="text" class="form-control" name="per_code_cost" value="<?php echo $res[0]['per_code_cost']; ?>">
 								</div>
+								<div class="col-md-3">
+                                <label for="exampleInputEmail1">Select Type</label> <i class="text-danger asterik">*</i>
+                                    <select id='type' name="type" class='form-control'>
+                                     <option value='jobs' <?php if ($res[0]['type'] == 'jobs') echo 'selected'; ?>>jobs</option>
+                                      <option value='senior jobs' <?php if ($res[0]['type'] == 'senior jobs') echo 'selected'; ?>>senior jobs</option>
+                                    </select>
+								</div>
                             </div>	 
 						  </div>  
+						  <br><div class="row">
+                            <div class="form-group">
+								<div class="col-md-3">
+									<label for="exampleInputEmail1">Min Refers</label><i class="text-danger asterik">*</i>
+									<input type="number" class="form-control" name="min_refers" value="<?php echo $res[0]['min_refers']; ?>">
+								</div>
+                            </div>	 
+						  </div> 
 						  <br>
 						  <div class="row">
                             <div class="col-md-12">

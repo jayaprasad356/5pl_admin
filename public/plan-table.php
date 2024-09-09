@@ -28,6 +28,8 @@
                                     <th  data-field="daily_earnings" data-sortable="true">Daily Earnings</th>
                                     <th  data-field="per_code_cost" data-sortable="true">Per Code Cost</th>
                                     <th  data-field="price" data-sortable="true">Price</th>
+                                    <th  data-field="type" data-sortable="true">Type</th>
+                                    <th  data-field="min_refers" data-sortable="true">Min Refers</th>
                                     <th data-field="image">Image</th>
                                     <th  data-field="description" data-sortable="true">Description</th>
                                 </tr>
