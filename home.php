@@ -191,8 +191,11 @@ include "header.php";
                             $sql = "SELECT COUNT(id) AS count  FROM transactions  WHERE type = 'refer_bonus' AND amount > 5 group by user_id";
                              $db->sql($sql);
                              $res = $db->getResult();
-                             $count = $res[0]['count'];
-                             echo $count;
+                             $sum = 0;
+                             foreach ($res as $row) {
+                                 $sum += $row['count'];
+                             }
+                             echo $sum;
                               ?></h3>
                             <p>Total Refer Users</p>
                         </div>
