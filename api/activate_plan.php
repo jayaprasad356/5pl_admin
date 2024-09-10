@@ -73,7 +73,7 @@ $invite_bonus = $plan[0]['invite_bonus'];
 $datetime = date('Y-m-d H:i:s');
 
 if ($plan_id == 6) {
-    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 50";
+    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 50 AND datetime > '2024-09-09'";
     $db->sql($sql_check);
     $check_refer_user = $db->getResult();
 
@@ -97,7 +97,7 @@ if ($plan_id == 6) {
 }   
 
 if ($plan_id == 7) {
-    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 300";
+    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 300 AND datetime > '2024-09-09'";
     $db->sql($sql_check);
     $check_refer_user = $db->getResult();
 
@@ -121,7 +121,7 @@ if ($plan_id == 7) {
 }   
 
 if ($plan_id == 8) {
-    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 500";
+    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 500 AND datetime > '2024-09-09'";
     $db->sql($sql_check);
     $check_refer_user = $db->getResult();
 
@@ -145,7 +145,7 @@ if ($plan_id == 8) {
 }   
 
 if ($plan_id == 9) {
-    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 1000";
+    $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 1000 AND datetime > '2024-09-09'";
     $db->sql($sql_check);
     $check_refer_user = $db->getResult();
 
