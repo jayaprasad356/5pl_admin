@@ -89,6 +89,54 @@ if ($claim == 0) {
     print_r(json_encode($response));
     return false;
 }
+if ($plan_id == 2) {
+    $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = 6";
+    $db->sql($sql_check);
+    $check_user = $db->getResult();
+
+    if (empty($check_user)) {
+        $response['success'] = false;
+        $response['message'] = "This job is disabled";
+        print_r(json_encode($response));
+        return false;
+    }
+}   
+if ($plan_id == 3) {
+    $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = 7";
+    $db->sql($sql_check);
+    $check_user = $db->getResult();
+
+    if (empty($check_user)) {
+        $response['success'] = false;
+        $response['message'] = "This job is disabled";
+        print_r(json_encode($response));
+        return false;
+    }
+}    
+if ($plan_id == 4) {
+    $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = 8";
+    $db->sql($sql_check);
+    $check_user = $db->getResult();
+
+    if (empty($check_user)) {
+        $response['success'] = false;
+        $response['message'] = "This job is disabled";
+        print_r(json_encode($response));
+        return false;
+    }
+}   
+if ($plan_id == 5) {
+    $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = 9";
+    $db->sql($sql_check);
+    $check_user = $db->getResult();
+
+    if (empty($check_user)) {
+        $response['success'] = false;
+        $response['message'] = "This job is disabled";
+        print_r(json_encode($response));
+        return false;
+    }
+} 
 
 if ($plan_id == 1) {
     $joined_date = $user_plan[0]['joined_date'];
@@ -102,7 +150,7 @@ if ($plan_id == 1) {
         echo json_encode($response);
         return;
     }
-}
+}  
 
 $sql = "SELECT daily_earnings FROM plan WHERE id = $plan_id";
 $db->sql($sql);
