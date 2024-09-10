@@ -141,7 +141,7 @@ if (isset($_POST['btnAdd'])) {
                                 <label for="exampleInputEmail1">Select Type</label> <i class="text-danger asterik">*</i><?php echo isset($error['type']) ? $error['type'] : ''; ?>
                                     <select id='type' name="type" class='form-control'>
                                     <option value='jobs'>jobs</option>
-                                      <option value='senior jobs'>senior jobs</option>
+                                      <option value='senior_jobs'>senior_jobs</option>
                                     </select>
                                 </div>
                             </div> 

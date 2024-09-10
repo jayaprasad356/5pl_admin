@@ -147,7 +147,7 @@ if (isset($_POST['btnCancel'])) { ?>
                                 <label for="exampleInputEmail1">Select Type</label> <i class="text-danger asterik">*</i>
                                     <select id='type' name="type" class='form-control'>
                                      <option value='jobs' <?php if ($res[0]['type'] == 'jobs') echo 'selected'; ?>>jobs</option>
-                                      <option value='senior jobs' <?php if ($res[0]['type'] == 'senior jobs') echo 'selected'; ?>>senior jobs</option>
+                                      <option value='senior_jobs' <?php if ($res[0]['type'] == 'senior_jobs') echo 'selected'; ?>>senior_jobs</option>
                                     </select>
 								</div>
                             </div>	 
