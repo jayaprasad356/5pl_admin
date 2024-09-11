@@ -72,7 +72,7 @@ $min_refers = $plan[0]['min_refers'];
 $invite_bonus = $plan[0]['invite_bonus'];
 $datetime = date('Y-m-d H:i:s');
 
-if ($plan_id == 6) {
+/*if ($plan_id == 6) {
     $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 50 AND datetime > '2024-09-09'";
     $db->sql($sql_check);
     $check_refer_user = $db->getResult();
@@ -95,7 +95,7 @@ if ($plan_id == 6) {
         return false;
     }
 }   
-
+*/
 if ($plan_id == 7) {
     $sql_check = "SELECT COUNT(*) as count FROM transactions WHERE user_id = $user_id AND type = 'refer_bonus' AND amount = 300 AND datetime > '2024-09-09'";
     $db->sql($sql_check);
@@ -103,7 +103,7 @@ if ($plan_id == 7) {
 
     if ($check_refer_user[0]['count'] < 3) {
         $response['success'] = false;
-        $response['message'] = "You need to refer at least $min_refers members in associate job";
+        $response['message'] = "You need to refer at least $min_refers members in Supervisor Job";
         print_r(json_encode($response));
         return false;
     }
@@ -127,7 +127,7 @@ if ($plan_id == 8) {
 
     if ($check_refer_user[0]['count'] < 3) {
         $response['success'] = false;
-        $response['message'] = "You need to refer at least $min_refers members in associate job";
+        $response['message'] = "You need to refer at least $min_refers members in Asst Manager Job";
         print_r(json_encode($response));
         return false;
     }
@@ -151,7 +151,7 @@ if ($plan_id == 9) {
 
     if ($check_refer_user[0]['count'] < 3) {
         $response['success'] = false;
-        $response['message'] = "You need to refer at least $min_refers members in associate job";
+        $response['message'] = "You need to refer at least $min_refers members in Manager Job";
         print_r(json_encode($response));
         return false;
     }
