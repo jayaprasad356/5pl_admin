@@ -191,6 +191,28 @@ if ($plan_id == 9) {
             if ($num == 1) {
                 $r_id = $res[0]['id'];
                 $r_refer_code = $res[0]['refer_code'];
+                
+                if ($plan_id == 2) {
+                    $check_plan_id = 6;
+                }
+                else if ($plan_id == 3) {
+                    $check_plan_id = 7;
+                }
+                else if ($plan_id == 4) {
+                    $check_plan_id = 8;
+                }
+                else if ($plan_id == 5) {
+                    $check_plan_id = 9;
+                }
+
+                $sql_check_user_plan = "SELECT * FROM user_plan WHERE user_id = $r_id AND plan_id = $check_plan_id";
+                $db->sql($sql_check_user_plan);
+                $res_check_user_plan = $db->getResult();
+                
+                if (!empty($res_check_user_plan)) {
+                    $invite_bonus = $price * 0.15;
+                }
+                
                 $sql = "UPDATE users SET bonus_wallet = bonus_wallet + $invite_bonus,team_income = team_income + $invite_bonus  WHERE refer_code = '$referred_by'";
                 $db->sql($sql);
     
