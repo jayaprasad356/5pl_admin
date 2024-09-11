@@ -223,6 +223,23 @@ if ($plan_id == 9) {
     
         }
 
+        if($plan_id == 6){
+            $sql = "UPDATE user_plan SET inactive = 1 WHERE user_id = $user_id AND plan_id = 2";
+            $db->sql($sql);
+        }
+        else if($plan_id == 7){
+            $sql = "UPDATE user_plan SET inactive = 1 WHERE user_id = $user_id AND plan_id = 3";
+            $db->sql($sql);
+        }
+        else if($plan_id == 8){
+            $sql = "UPDATE user_plan SET inactive = 1 WHERE user_id = $user_id AND plan_id = 4";
+            $db->sql($sql);
+        }
+        else if($plan_id == 9){
+            $sql = "UPDATE user_plan SET inactive = 1 WHERE user_id = $user_id AND plan_id = 5";
+            $db->sql($sql);
+        }
+
         $sql = "UPDATE users SET recharge = recharge - $price, total_assets = total_assets + $price WHERE id = $user_id";
         $db->sql($sql);
 
