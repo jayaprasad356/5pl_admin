@@ -89,7 +89,7 @@ if ($claim == 0) {
     print_r(json_encode($response));
     return false;
 }
-if ($plan_id == 2) {
+/*if ($plan_id == 2) {
     $sql_check = "SELECT * FROM user_plan WHERE user_id = $user_id AND plan_id = 6";
     $db->sql($sql_check);
     $check_user = $db->getResult();
@@ -137,7 +137,7 @@ if ($plan_id == 5) {
         return false;
     }
 } 
-
+*/
 if ($plan_id == 1) {
     $joined_date = $user_plan[0]['joined_date'];
     $current_date = new DateTime($datetime);
