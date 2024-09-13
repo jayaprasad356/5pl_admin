@@ -1,4 +1,4 @@
-<?php include "footer.php"; ?>
+
 
 <?php
 header('Access-Control-Allow-Origin: *');
@@ -74,10 +74,6 @@ if ($num == 1) {
     $response['message'] = "Please Login with your device.";
 }
 
-$response['success'] = true;
-$response['registered'] = false;
-$response['message'] = "User Not Found";
-print_r(json_encode($response));
-return false;
+
 
 echo json_encode($response);
