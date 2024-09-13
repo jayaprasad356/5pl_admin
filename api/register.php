@@ -68,12 +68,6 @@ if (empty($_POST['state'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['password'])) {
-    $response['success'] = false;
-    $response['message'] = "password is Empty";
-    print_r(json_encode($response));
-    return false;
-}
 if (empty($_POST['referred_by'])) {
     $response['success'] = false;
     $response['message'] = "Referred By is Empty";
@@ -87,7 +81,6 @@ $age = $db->escapeString($_POST['age']);
 $city = $db->escapeString($_POST['city']);
 $email = $db->escapeString($_POST['email']);
 $state = $db->escapeString($_POST['state']);
-$password = $db->escapeString($_POST['password']);
 $referred_by = $db->escapeString($_POST['referred_by']);
 $c_referred_by = '';
 $d_referred_by = '';
@@ -147,7 +140,7 @@ if ($num >= 1) {
     }
 
     // Insert user data
-    $sql = "INSERT INTO users (`mobile`,`name`,`referred_by`,`c_referred_by`,`d_referred_by`,`age`,`city`,`email`,`state`,`registered_datetime`,`password`) VALUES ('$mobile','$name','$referred_by','$c_referred_by','$d_referred_by','$age','$city','$email','$state','$datetime','$password')";
+    $sql = "INSERT INTO users (`mobile`,`name`,`referred_by`,`c_referred_by`,`d_referred_by`,`age`,`city`,`email`,`state`,`registered_datetime`) VALUES ('$mobile','$name','$referred_by','$c_referred_by','$d_referred_by','$age','$city','$email','$state','$datetime')";
     $db->sql($sql);
 
     // Get the ID of the inserted user
