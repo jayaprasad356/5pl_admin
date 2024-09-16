@@ -16,7 +16,10 @@ $db->connect();
 
 $response = array();
 
-if (empty($_POST['user_id'])) {
+$response['success'] = false;
+$response['message'] = "Disabled";
+
+/*if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User ID is Empty";
     echo json_encode($response);
@@ -90,6 +93,6 @@ if ($amount <= $recharge) {
       $response['success'] = false;
       $response['message'] = "Your Recharge Balance is Low";
  }
-
+*/
 echo json_encode($response);
 ?>
