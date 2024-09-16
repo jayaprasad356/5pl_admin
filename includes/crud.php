@@ -18,17 +18,17 @@ class Database
 
 
      //live
-    //private $db_host = "localhost";  // Change as required
-    //private $db_user = "u117947056_5pl";  // Change as required
-    //private $db_pass = "Penta@011";  // Change as required
-    //private $db_name = "u117947056_5pl"; 
+    private $db_host = "localhost";  // Change as required
+    private $db_user = "u117947056_5pl";  // Change as required
+    private $db_pass = "Penta@011";  // Change as required
+    private $db_name = "u117947056_5pl"; 
 
 
       //demo
-      private $db_host = "localhost";  // Change as required
-      private $db_user = "u117947056_demo_5pl";  // Change as required
-      private $db_pass = "Demo5pl@2024";  // Change as required
-      private $db_name = "u117947056_demo_5pl"; 
+      //private $db_host = "localhost";  // Change as required
+      //private $db_user = "u117947056_demo_5pl";  // Change as required
+      //private $db_pass = "Demo5pl@2024";  // Change as required
+      //private $db_name = "u117947056_demo_5pl"; 
 
     private $con = false; // Check to see if the connection is active
     private $myconn = ""; // This will be our mysqli object
