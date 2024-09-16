@@ -71,9 +71,7 @@ if ($num == 1) {
     
     $response['success'] = false;
     $response['registered'] = false;
-    $response['message'] = "Please Login with your device.";
+    $response['message'] = "Mobile Number Not Registered.";
 }
-
-
 
 echo json_encode($response);
