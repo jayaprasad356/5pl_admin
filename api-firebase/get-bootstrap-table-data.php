@@ -112,6 +112,7 @@ $db->connect();
                 $tempRow['name'] = $row['name'];
                 $tempRow['mobile'] = $row['mobile'];
                 $tempRow['email'] = $row['email'];
+                $tempRow['password'] = $row['password'];
                 $tempRow['referred_by'] = $row['referred_by'];
                 $tempRow['refer_code'] = $row['refer_code'];
                 $tempRow['account_num'] = $row['account_num'];

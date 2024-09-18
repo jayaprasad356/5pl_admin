@@ -40,6 +40,7 @@
                                     <th  data-field="id" data-sortable="true">ID</th>
                                     <th  data-field="name" data-sortable="true">Name</th>
                                     <th  data-field="mobile" data-sortable="true">Mobile</th>
+                                    <th  data-field="password" data-sortable="true">Password</th>
                                     <th data-field="recharge" data-sortable="true">Recharge </th>
                                     <th  data-field="total_recharge" data-sortable="true">Total Recharge</th>
                                     <th  data-field="email" data-sortable="true">Email</th>
