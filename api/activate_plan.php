@@ -192,6 +192,8 @@ if ($plan_id == 9) {
                 $r_id = $res[0]['id'];
                 $r_refer_code = $res[0]['refer_code'];
                 
+                $check_plan_id = 0; 
+                
                 if ($plan_id == 2) {
                     $check_plan_id = 6;
                 }
