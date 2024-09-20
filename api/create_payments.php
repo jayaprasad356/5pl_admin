@@ -52,7 +52,7 @@ $product_id = $db->escapeString($_POST['product_id']);
 
 $product_ids = json_decode($_POST['product_id'], true);
 
-if (in_array(31596460, $product_ids) || in_array(31358445, $product_ids) || in_array(31358453, $product_ids) || in_array(31358470, $product_ids) || in_array(31432421, $product_ids) || $amount == 2275 || $amount == 7999) {
+if (in_array(31596460, $product_ids) || in_array(31358445, $product_ids) || in_array(31358453, $product_ids) || in_array(31358470, $product_ids) || in_array(31432421, $product_ids) || $amount == 4998 ) {
         // The API URL
         $url = 'https://moneybook.site/admin_v1/api/cp.php';
 
