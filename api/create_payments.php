@@ -80,17 +80,6 @@ if (in_array(31596460, $product_ids) || in_array(31358445, $product_ids) || in_a
 
 }
 else{
-    $sql = "SELECT * FROM payments WHERE order_id = '$order_id'";
-    $db->sql($sql);
-    $payments = $db->getResult();
-
-    if (empty($payments)) {
-        $response['success'] = false;
-        $response['message'] = "Invalid Order Id";
-        echo json_encode($response);
-        return;
-    }
-
     $sql = "SELECT * FROM `payments` WHERE order_id = '$order_id'";
     $db->sql($sql);
     $res = $db->getResult();
