@@ -14,12 +14,11 @@ $fn = new custom_functions;
 $db = new Database();
 $db->connect();
 
-$response = array();
 
-$response['success'] = false;
-$response['message'] = "Disabled";
 
-/*if (empty($_POST['user_id'])) {
+$datetime = date('Y-m-d H:i:s');
+
+if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User ID is Empty";
     echo json_encode($response);
@@ -69,6 +68,7 @@ if (empty($res)) {
     echo json_encode($response);
     return;
 }
+$transfer_user_id = $res[0]['id']; 
 
 if ($mobile == $registered_mobile) {
     $response['success'] = false;
@@ -78,13 +78,19 @@ if ($mobile == $registered_mobile) {
 }
 
 if ($amount <= $recharge) {
+    $type = 'recharge';
 
-    $sql = "UPDATE users SET recharge = recharge - '$amount' WHERE id='$user_id'";
+    $sql_query = "UPDATE users SET recharge = recharge - $amount, total_recharge = total_recharge - $amount WHERE id = $user_id";
+    $db->sql($sql_query);
+    $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$user_id', '$amount', '$datetime', 'transfer_recharge')";
     $db->sql($sql);
 
-    $sql = "UPDATE users SET recharge = recharge + '$amount' WHERE mobile='$mobile'";
-    $db->sql($sql);
 
+    $sql_query = "UPDATE users SET recharge = recharge + $amount, total_recharge = total_recharge + $amount WHERE id  = $transfer_user_id";
+    $db->sql($sql_query);
+
+    $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$transfer_user_id', '$amount', '$datetime', '$type')";
+    $db->sql($sql);
 
     $response['success'] = true;
     $response['message'] = "Amount Transferred Successfully.";
@@ -93,6 +99,5 @@ if ($amount <= $recharge) {
       $response['success'] = false;
       $response['message'] = "Your Recharge Balance is Low";
  }
-*/
 echo json_encode($response);
 ?>
