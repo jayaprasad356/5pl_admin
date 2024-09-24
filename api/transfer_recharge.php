@@ -15,8 +15,13 @@ $db = new Database();
 $db->connect();
 
 
+    $response['success'] = false;
+    $response['message'] = "Disable";
+    echo json_encode($response);
+    return;
 
-$datetime = date('Y-m-d H:i:s');
+
+/*$datetime = date('Y-m-d H:i:s');
 
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
@@ -100,4 +105,4 @@ if ($amount <= $recharge) {
       $response['message'] = "Your Recharge Balance is Low";
  }
 echo json_encode($response);
-?>
+?>*/
