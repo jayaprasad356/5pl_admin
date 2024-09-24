@@ -78,7 +78,7 @@ if ($mobile == $registered_mobile) {
 }
 
 if ($amount <= $recharge) {
-    $type = 'recharge';
+    $type = 'friend_recharge';
 
     $sql_query = "UPDATE users SET recharge = recharge - $amount, total_recharge = total_recharge - $amount WHERE id = $user_id";
     $db->sql($sql_query);
