@@ -47,6 +47,7 @@
                                     <th data-field="user_mobile" data-sortable="true">User Mobile</th>
                                     <th data-field="plan_name" data-sortable="true">Plan Name</th>
                                     <th data-field="plan_price" data-sortable="true">Price</th>
+                                    <th data-field="user_referred_by" data-sortable="true">Referred By</th>
                                     <th data-field="plan_daily_codes" data-sortable="true">Daily Codes</th>
                                     <th data-field="plan_daily_earnings" data-sortable="true">Daily Earnings</th>
                                     <th data-field="plan_per_code_cost" data-sortable="true">Per Code Cost</th>

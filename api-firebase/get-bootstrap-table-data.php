@@ -432,7 +432,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
             $total = $row['total'];
         }
         
-        $sql = "SELECT l.id AS id, l.*, u.name AS user_name, u.mobile AS user_mobile, p.name AS plan_name, p.price AS plan_price, p.daily_codes AS plan_daily_codes, p.per_code_cost AS plan_per_code_cost, p.daily_earnings AS plan_daily_earnings  FROM `user_plan` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
+        $sql = "SELECT l.id AS id, l.*, u.name AS user_name, u.mobile AS user_mobile, u.referred_by AS user_referred_by, p.name AS plan_name, p.price AS plan_price, p.daily_codes AS plan_daily_codes, p.per_code_cost AS plan_per_code_cost, p.daily_earnings AS plan_daily_earnings  FROM `user_plan` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
         $db->sql($sql);
         $res = $db->getResult();
         
@@ -450,6 +450,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
         $tempRow['id'] = $row['id'];
         $tempRow['user_name'] = $row['user_name'];
         $tempRow['user_mobile'] = $row['user_mobile'];
+        $tempRow['user_referred_by'] = $row['user_referred_by'];
         $tempRow['plan_name'] = $row['plan_name'];
         $tempRow['plan_price'] = $row['plan_price'];
         $tempRow['plan_daily_codes'] = $row['plan_daily_codes'];
