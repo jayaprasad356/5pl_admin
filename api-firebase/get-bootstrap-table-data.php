@@ -368,7 +368,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'transactions') {
     foreach ($res as $row)
         $total = $row['total'];
    
-    $sql = "SELECT l.id AS id, l.*, u.name, u.mobile, p.price FROM `transactions` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
+    $sql = "SELECT DISTINCT l.id AS id, l.*, u.name, u.mobile, p.price  FROM `transactions` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
     $db->sql($sql);
     $res = $db->getResult();
 
