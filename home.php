@@ -204,6 +204,23 @@ include "header.php";
                         
                     </div>
                 </div>
+                <div class="col-lg-4 col-xs-6">
+                    <div class="small-box bg-orange">
+                        <div class="inner">
+                            <h3><?php
+                             $sql = "SELECT COUNT(id) AS count  FROM transactions WHERE type = 'daily_income' AND DATE(datetime) = '$date'  group by user_id";
+                             $db->sql($sql);
+                             $res = $db->getResult();
+                             $count = $res[0]['count'];
+                             echo $count;
+                              ?></h3>
+                            <p>Today Generated Codes Count</p>
+                        </div>
+                       
+                        <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        
+                    </div>
+                </div>
              </div>
         </section>
         <?php } ?>
