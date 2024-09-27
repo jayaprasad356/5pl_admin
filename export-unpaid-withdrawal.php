@@ -6,7 +6,7 @@ date_default_timezone_set('Asia/Kolkata');
 $currentdate = date('Y-m-d');
 
 $sql = "
-	SELECT w.id, 'unpaid' as status, u.name, u.mobile, w.amount, w.datetime, u.bank, u.account_num, u.holder_name, u.branch, u.ifsc
+	SELECT w.id, 'unpaid' as status, u.name, u.mobile, w.amount, w.datetime, u.bank, CONCAT(',', u.account_num, ',') as account_num, u.holder_name, u.branch, u.ifsc
 	FROM withdrawals w
   JOIN users u ON w.user_id = u.id
   WHERE w.status = 0"; 
