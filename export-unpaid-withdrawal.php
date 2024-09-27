@@ -5,13 +5,11 @@ $db->connect();
 date_default_timezone_set('Asia/Kolkata');
 $currentdate = date('Y-m-d');
 
-$sql = "SELECT 
-u.name AS `Beneficiary Name (Mandatory) Full name of the customer - eg: Bruce Wayne`, 
-CONCAT('', u.account_num, '') AS `Beneficiary Account number (Mandatory) Beneficiary Account number to which the money should be transferred`, 
-u.ifsc AS `IFSC code (Mandatory) IFSC code of beneficary's bank. eg:KKBK0000958`, 
-w.amount AS `Amount (Mandatory) Amount that needs to be transfered. Eg: 100.00`, 
-NULL AS `Description / Purpose (Optional) For Internal Reference eg: For salary`
-FROM users u JOIN  withdrawals w ON u.id = w.user_id AND w.status = 0";
+$sql = "
+	SELECT w.id, 'unpaid' as status, u.name, u.mobile, w.amount, w.datetime, u.bank, u.account_num, u.holder_name, u.branch, u.ifsc
+	FROM withdrawals w
+  JOIN users u ON w.user_id = u.id
+  WHERE w.status = 0"; 
 
        $db->sql($sql);
     $developer_records = $db->getResult();
