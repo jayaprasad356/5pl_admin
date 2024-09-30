@@ -21,7 +21,7 @@ if (empty($_POST['user_id'])) {
 
 $user_id = $db->escapeString($_POST['user_id']);
 
-$sql = "SELECT * FROM users WHERE id = $user_id";
+$sql = "SELECT valid FROM users WHERE id = $user_id ";
 $db->sql($sql);
 $user = $db->getResult();
 
@@ -32,30 +32,34 @@ if (empty($user)) {
     return false;
 }
 
-$sql = "SELECT * FROM rental";
+$sql = "SELECT user_rental.* ,rental.name,rental.image,rental.course_charges,rental.monthly_rental_earnings,rental.per_month,rental.daily_earnings
+        FROM user_rental 
+        LEFT JOIN rental ON user_rental.rental_id = rental.id
+        WHERE user_rental.user_id = '$user_id' AND user_rental.inactive = 0";
+
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 
+
 if ($num >= 1) {
-    foreach ($res as $row) {
-        $temp['id'] = $row['id'];
-        $temp['name'] = $row['name'];
-        $temp['image'] = DOMAIN_URL . $row['image'];
-        $temp['course_charges'] = $row['course_charges'];
-        $temp['monthly_rental_earnings'] = $row['monthly_rental_earnings'] . '%';
-        $temp['per_month'] = $row['per_month'];
-        $temp['description'] = $row['description'];
-        $temp['daily_earnings'] = $row['daily_earnings'];
-        $rows[] = $temp;
+    foreach ($res as &$job) {
+        $imagePath = $job['image'];
+        $imageURL = DOMAIN_URL . $imagePath;
+        $job['image'] = $imageURL;
+
+       
     }
+
     $response['success'] = true;
-    $response['message'] = "Rental Details Listed Successfully";
-    $response['data'] = $rows;
+    $response['message'] = "User rental Details Retrieved Successfully";
+    $response['data'] = $res;
     print_r(json_encode($response));
-} else {
+}
+else{
     $response['success'] = false;
-    $response['message'] = "Rental not found";
+    $response['message'] = "rental Not found";
     print_r(json_encode($response));
+
 }
 ?>
