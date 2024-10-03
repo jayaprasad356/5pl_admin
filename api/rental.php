@@ -47,6 +47,13 @@ if ($num >= 1) {
         $temp['per_month'] = $row['per_month'];
         $temp['description'] = $row['description'];
         $temp['daily_earnings'] = $row['daily_earnings'];
+
+        $rental_id = $row['id'];
+        $sql_check_rental = "SELECT * FROM user_rental WHERE user_id = $user_id AND rental_id = $rental_id";
+        $db->sql($sql_check_rental);
+        $rental_exists = $db->numRows() > 0;
+        $temp['status'] = $rental_exists ? 1: 0;
+        
         $rows[] = $temp;
     }
     $response['success'] = true;

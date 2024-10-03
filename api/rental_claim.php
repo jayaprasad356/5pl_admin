@@ -89,60 +89,14 @@ if ($claim == 0) {
     print_r(json_encode($response));
     return false;
 }
-/*if ($rental_id == 2) {
-    $sql_check = "SELECT * FROM user_rental WHERE user_id = $user_id AND rental_id = 6";
-    $db->sql($sql_check);
-    $check_user = $db->getResult();
 
-    if (empty($check_user)) {
-        $response['success'] = false;
-        $response['message'] = "This job is disabled";
-        print_r(json_encode($response));
-        return false;
-    }
-}   
-if ($rental_id == 3) {
-    $sql_check = "SELECT * FROM user_rental WHERE user_id = $user_id AND rental_id = 7";
-    $db->sql($sql_check);
-    $check_user = $db->getResult();
-
-    if (empty($check_user)) {
-        $response['success'] = false;
-        $response['message'] = "This job is disabled";
-        print_r(json_encode($response));
-        return false;
-    }
-}    
-if ($rental_id == 4) {
-    $sql_check = "SELECT * FROM user_rental WHERE user_id = $user_id AND rental_id = 8";
-    $db->sql($sql_check);
-    $check_user = $db->getResult();
-
-    if (empty($check_user)) {
-        $response['success'] = false;
-        $response['message'] = "This job is disabled";
-        print_r(json_encode($response));
-        return false;
-    }
-}   
-if ($rental_id == 5) {
-    $sql_check = "SELECT * FROM user_rental WHERE user_id = $user_id AND rental_id = 9";
-    $db->sql($sql_check);
-    $check_user = $db->getResult();
-
-    if (empty($check_user)) {
-        $response['success'] = false;
-        $response['message'] = "This job is disabled";
-        print_r(json_encode($response));
-        return false;
-    }
-} 
-*/
 if ($rental_id == 1) {
     $joined_date = $user_rental[0]['joined_date'];
     $current_date = new DateTime($datetime);
     $rental_joined_date = new DateTime($joined_date);
     $interval = $current_date->diff($rental_joined_date);
+
+    $days_passed = $interval->days;
 
     if ($interval->days > 30) {
         $response['success'] = false;
@@ -150,7 +104,9 @@ if ($rental_id == 1) {
         echo json_encode($response);
         return;
     }
-}  
+} 
+ 
+if ($days_passed >= 30) {
 
 $sql = "SELECT daily_earnings FROM rental WHERE id = $rental_id";
 $db->sql($sql);
@@ -164,7 +120,6 @@ if (empty($rental)) {
 }
 $daily_income = $rental[0]['daily_earnings'];
 
-
 $sql = "UPDATE user_rental SET claim = 0,income = income + $daily_income WHERE rental_id = $rental_id AND user_id = $user_id";
 $db->sql($sql);
 
@@ -175,11 +130,15 @@ $sql_insert_transaction = "INSERT INTO transactions (`user_id`, `amount`, `datet
 $db->sql($sql_insert_transaction);
 
 
-
-
-
-
 $response['success'] = true;
 $response['message'] = "Work Completed Successfully";
 echo json_encode($response);
+}
+else {
+    $remaining_days = 30 - $days_passed;
+    $response['success'] = true;
+    $response['message'] = "$remaining_days days remaining to complete this work.";
+    echo json_encode($response);
+    return;
+}
 ?>
