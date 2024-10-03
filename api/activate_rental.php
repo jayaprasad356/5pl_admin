@@ -67,9 +67,10 @@ if ($rental_id == 2) {
     print_r(json_encode($response));
     return false;
 }
-$price = $rental[0]['price'];
+$course_charges = $rental[0]['course_charges'];
 $min_refers = $rental[0]['min_refers'];
 $invite_bonus = $rental[0]['invite_bonus'];
+$course_charges = $rental[0]['course_charges'];
 $datetime = date('Y-m-d H:i:s');
 
 /*if ($rental_id == 6) {
@@ -180,7 +181,7 @@ if ($rental_id == 9) {
         print_r(json_encode($response));
         return false;
     }
-    if ($recharge >= $price) {
+    if ($recharge >= $course_charges) {
 
         if($refer_code){
             $sql = "SELECT * FROM users WHERE refer_code = '$referred_by'";
@@ -212,7 +213,7 @@ if ($rental_id == 9) {
                 $res_check_user_rental = $db->getResult();
                 
                 if (!empty($res_check_user_rental)) {
-                    $invite_bonus = $price * 0.15;
+                    $invite_bonus = $course_charges * 0.15;
                 }
                 
                 $sql = "UPDATE users SET bonus_wallet = bonus_wallet + $invite_bonus,team_income = team_income + $invite_bonus  WHERE refer_code = '$referred_by'";
@@ -242,13 +243,13 @@ if ($rental_id == 9) {
             $db->sql($sql);
         }
 
-        $sql = "UPDATE users SET recharge = recharge - $price, total_assets = total_assets + $price WHERE id = $user_id";
+        $sql = "UPDATE users SET recharge = recharge - $course_charges, total_assets = total_assets + $course_charges WHERE id = $user_id";
         $db->sql($sql);
 
     $sql_insert_user_rental = "INSERT INTO user_rental (user_id,rental_id,joined_date,claim) VALUES ('$user_id','$rental_id','$date',1)";
     $db->sql($sql_insert_user_rental);
 
-    $sql_insert_transaction = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$user_id', '$price', '$datetime', 'rental_activated')";
+    $sql_insert_transaction = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$user_id', '$course_charges', '$datetime', 'rental_activated')";
     $db->sql($sql_insert_transaction);
 
     $sql_user = "SELECT * FROM users WHERE id = $user_id";
