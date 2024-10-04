@@ -242,7 +242,7 @@ if ($plan_id == 9) {
             $db->sql($sql);
         }
 
-        $sql = "UPDATE users SET recharge = recharge - $price, total_assets = total_assets + $price WHERE id = $user_id";
+        $sql = "UPDATE users SET recharge = recharge - $price, total_assets = total_assets + $price,withdrawal_status = 1 WHERE id = $user_id";
         $db->sql($sql);
 
     $sql_insert_user_plan = "INSERT INTO user_plan (user_id,plan_id,joined_date,claim) VALUES ('$user_id','$plan_id','$date',1)";
