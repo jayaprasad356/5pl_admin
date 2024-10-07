@@ -223,6 +223,12 @@ if ($_SESSION['role'] == 'admin') {
                         <span>Notifications</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="bulk_amount.php">
+                    <i class="fas fa-file"></i>
+                        <span>Bulk Amount</span>
+                    </a>
+                </li>
                 <?php } ?>
                 <li class="treeview">
                     <a href="recharge.php">
@@ -293,6 +299,7 @@ if ($_SESSION['role'] == 'admin') {
                         <span>Payments</span>
                     </a>
                 </li>
+               
                 <?php } ?>
             </section>
             <!-- /.sidebar -->
