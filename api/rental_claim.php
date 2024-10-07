@@ -137,7 +137,7 @@ echo json_encode($response);
 else {
     $remaining_days = 30 - $days_passed;
     $response['success'] = true;
-    $response['message'] = "$remaining_days days remaining to complete this work.";
+    $response['message'] = "$remaining_days days remaining to claim your rental earning";
     echo json_encode($response);
     return;
 }
