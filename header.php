@@ -229,6 +229,12 @@ if ($_SESSION['role'] == 'admin') {
                         <span>Bulk Amount</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="bulk_recharge.php">
+                    <i class="fas fa-file"></i>
+                        <span>Bulk Recharge</span>
+                    </a>
+                </li>
                 <?php } ?>
                 <li class="treeview">
                     <a href="recharge.php">
