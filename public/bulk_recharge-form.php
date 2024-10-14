@@ -44,7 +44,7 @@ if (isset($_POST['btnd'])) {
         }
 ?>
 <section class="content-header">
-<h1>Add New Bulk Amount</h1>
+<h1>Add New Bulk Recharge</h1>
     <?php echo isset($error['add_notification']) ? $error['add_notification'] : ''; ?>
     <ol class="breadcrumb">
         <li><a href="home.php"><i class="fa fa-home"></i> Home</a></li>
