@@ -465,6 +465,80 @@ if (isset($_GET['table']) && $_GET['table'] == 'user_plan') {
     print_r(json_encode($bulkData));
 }
 
+//user plan
+if (isset($_GET['table']) && $_GET['table'] == 'user_rental') {
+
+    $offset = 0;
+    $limit = 10;
+    $where = '';
+    $sort = 'id';
+    $order = 'DESC';
+
+    if (isset($_GET['name']) && $_GET['name'] != '') {
+        $name = $db->escapeString($fn->xss_clean($_GET['name']));
+        $where .= " AND r.name = '$name'";
+    }
+    if ((isset($_GET['joined_date']) && $_GET['joined_date'] != '')) {
+        $joined_date = $db->escapeString($fn->xss_clean($_GET['joined_date']));
+        $where .= " AND l.joined_date = '$joined_date'";
+    }
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($_GET['offset']);
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($_GET['limit']);
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['order']))
+        $order = $db->escapeString($_GET['order']);
+
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
+            $search = $db->escapeString($_GET['search']);
+            $where .= " AND (u.id LIKE '%" . $search . "%' OR u.name LIKE '%" . $search ."%'  OR u.mobile LIKE '%" . $search . "%')";
+        }
+        $join = "LEFT JOIN `users` u ON l.user_id = u.id LEFT JOIN `rental` r ON l.rental_id = r.id WHERE l.id IS NOT NULL " . $where;
+
+        $sql = "SELECT COUNT(l.id) AS total FROM `user_rental` l " . $join;
+        $db->sql($sql);
+        $res = $db->getResult();
+        foreach ($res as $row) {
+            $total = $row['total'];
+        }
+        
+        $sql = "SELECT l.id AS id, l.*, u.name AS user_name, u.mobile AS user_mobile, u.referred_by AS user_referred_by, r.name AS rental_name, r.price AS rental_price, r.course_charges AS rental_course_charges, r.per_month AS rental_per_month, r.monthly_rental_earnings AS rental_monthly_rental_earnings, r.daily_earnings AS rental_daily_earnings, r.min_refers AS rental_min_refers, r.invite_bonus AS rental_invite_bonus  FROM `user_rental` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
+        $db->sql($sql);
+        $res = $db->getResult();
+        
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    $rows = array();
+    $tempRow = array();
+    foreach ($res as $row) {
+
+
+        
+        //$operate = ' <a href="edit-user_plan.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
+        $operate = ' <a class="text text-danger" href="delete-user_rental.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
+        $tempRow['id'] = $row['id'];
+        $tempRow['user_name'] = $row['user_name'];
+        $tempRow['user_mobile'] = $row['user_mobile'];
+        $tempRow['user_referred_by'] = $row['user_referred_by'];
+        $tempRow['rental_name'] = $row['rental_name'];
+        $tempRow['rental_course_charges'] = $row['rental_course_charges'];
+        $tempRow['rental_price'] = $row['rental_price'];
+        $tempRow['rental_per_month'] = $row['rental_per_month'];
+        $tempRow['rental_monthly_rental_earnings'] = $row['rental_monthly_rental_earnings'];
+        $tempRow['rental_min_refers'] = $row['rental_min_refers'];
+        $tempRow['rental_daily_earnings'] = $row['rental_daily_earnings'];
+        $tempRow['rental_invite_bonus'] = $row['rental_invite_bonus'];
+        $tempRow['income'] = $row['income'];
+        $tempRow['joined_date'] = $row['joined_date'];
+        $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
 //recharge
 if (isset($_GET['table']) && $_GET['table'] == 'recharge') {
     $offset = 0;

@@ -206,6 +206,12 @@ if ($_SESSION['role'] == 'admin') {
                    </ul>
                 </li>
                 <li class="treeview">
+                    <a href="user_rental.php">
+                        <i class="fa fa-user"></i>
+                        <span>User Rental</span>
+                    </a>
+                </li>
+                <li class="treeview">
                     <a href="settings.php">
                         <i class="fa fa-gear"></i>
                         <span>Setting</span>
