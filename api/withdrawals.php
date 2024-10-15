@@ -64,6 +64,16 @@ if ($withdrawal_status == 0) {
     return false;
 }
 
+$sql = "SELECT * FROM withdrawals WHERE user_id='$user_id' AND status = 0";
+$db->sql($sql);
+$pendingWithdrawals = $db->getResult();
+if (!empty($pendingWithdrawals)) {
+    $response['success'] = false;
+    $response['message'] = "Please withdraw again after your pending withdrawal is paid";
+    print_r(json_encode($response));
+    return false;
+}
+
 if (!isBetween10AMand6PM()) {
     $response['success'] = false;
     $response['message'] = "Withdrawal time morning 10:00AM to 6PM";
