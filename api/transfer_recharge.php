@@ -17,11 +17,8 @@ $db->connect();
 
 $datetime = date('Y-m-d H:i:s');
 
-$response['success'] = false;
-$response['message'] = "Disabled";
-echo json_encode($response);
 
-/*if (empty($_POST['user_id'])) {
+if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User ID is Empty";
     echo json_encode($response);
@@ -45,6 +42,13 @@ if (empty($_POST['amount'])) {
 $user_id = $db->escapeString($_POST['user_id']);
 $amount = $db->escapeString($_POST['amount']);
 $mobile = $db->escapeString($_POST['mobile']);
+
+if (!is_numeric($amount) || $amount <= 0) {
+    $response['success'] = false;
+    $response['message'] = "Invalid amount.";
+    echo json_encode($response);
+    return;
+}
 
 
 $sql = "SELECT * FROM users WHERE id='$user_id'";
@@ -103,4 +107,4 @@ if ($amount <= $recharge) {
       $response['message'] = "Your Recharge Balance is Low";
  }
 echo json_encode($response);
-?>*/
+?>
