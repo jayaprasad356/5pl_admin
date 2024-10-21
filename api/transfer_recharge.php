@@ -38,10 +38,17 @@ if (empty($_POST['amount'])) {
     echo json_encode($response);
     return;
 }
+if (empty($_POST['wallet_type'])) {
+    $response['success'] = false;
+    $response['message'] = "wallet_type is Empty";
+    echo json_encode($response);
+    return;
+}
 
 $user_id = $db->escapeString($_POST['user_id']);
 $amount = $db->escapeString($_POST['amount']);
 $mobile = $db->escapeString($_POST['mobile']);
+$wallet_type = $db->escapeString($_POST['wallet_type']);
 
 if (!is_numeric($amount) || $amount <= 0) {
     $response['success'] = false;
@@ -63,6 +70,7 @@ if (empty($res)) {
 }
 
 $recharge = $res[0]['recharge'];
+$balance = $res[0]['balance'];
 $registered_mobile = $res[0]['mobile']; 
 
 $sql = "SELECT id FROM users WHERE mobile='$mobile'";
@@ -83,28 +91,53 @@ if ($mobile == $registered_mobile) {
     echo json_encode($response);
     return;
 }
+if($wallet_type == 'recharge'){
+    if ($amount <= $recharge) {
+        $type = 'friend_recharge';
+    
+        $sql_query = "UPDATE users SET recharge = recharge - $amount, total_recharge = total_recharge - $amount WHERE id = $user_id";
+        $db->sql($sql_query);
+        $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$user_id', '$amount', '$datetime', 'transfer_recharge')";
+        $db->sql($sql);
+    
+    
+        $sql_query = "UPDATE users SET recharge = recharge + $amount, total_recharge = total_recharge + $amount WHERE id  = $transfer_user_id";
+        $db->sql($sql_query);
+    
+        $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$transfer_user_id', '$amount', '$datetime', '$type')";
+        $db->sql($sql);
 
-if ($amount <= $recharge) {
-    $type = 'friend_recharge';
+        $response['success'] = true;
+        $response['message'] = "Amount Transferred Successfully.";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "Your Recharge Balance is Low";
+    }
+}
 
-    $sql_query = "UPDATE users SET recharge = recharge - $amount, total_recharge = total_recharge - $amount WHERE id = $user_id";
-    $db->sql($sql_query);
-    $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$user_id', '$amount', '$datetime', 'transfer_recharge')";
-    $db->sql($sql);
+if($wallet_type == 'balance'){
+    if ($amount <= $balance) {
+        $type = 'friend_recharge';
+    
+        $sql_query = "UPDATE users SET balance = balance - $amount WHERE id = $user_id";
+        $db->sql($sql_query);
+        $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$user_id', '$amount', '$datetime', 'transfer_recharge')";
+        $db->sql($sql);
+    
+    
+        $sql_query = "UPDATE users SET recharge = recharge + $amount, total_recharge = total_recharge + $amount WHERE id  = $transfer_user_id";
+        $db->sql($sql_query);
+    
+        $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$transfer_user_id', '$amount', '$datetime', '$type')";
+        $db->sql($sql);
 
-
-    $sql_query = "UPDATE users SET recharge = recharge + $amount, total_recharge = total_recharge + $amount WHERE id  = $transfer_user_id";
-    $db->sql($sql_query);
-
-    $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$transfer_user_id', '$amount', '$datetime', '$type')";
-    $db->sql($sql);
-
-    $response['success'] = true;
-    $response['message'] = "Amount Transferred Successfully.";
-    } 
-     else {
-      $response['success'] = false;
-      $response['message'] = "Your Recharge Balance is Low";
- }
+        $response['success'] = true;
+        $response['message'] = "Amount Transferred Successfully.";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "Your Recharge Balance is Low";
+    }
+}
+ 
 echo json_encode($response);
 ?>
