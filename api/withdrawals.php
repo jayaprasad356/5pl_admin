@@ -48,7 +48,14 @@ $sql = "SELECT * FROM settings WHERE id=1";
 $db->sql($sql);
 $result = $db->getResult();
 $min_withdrawal = $result[0]['min_withdrawal'];
+$withdrawal_status = $result[0]['withdrawal_status'];
 
+if ($withdrawal_status == 0) {
+    $response['success'] = false;
+    $response['message'] = "Withdrawal Disabled";
+    print_r(json_encode($response));
+    return false;
+}
 
 $sql = "SELECT * FROM users WHERE id='$user_id'";
 $db->sql($sql);
@@ -63,6 +70,7 @@ if ($withdrawal_status == 0) {
     print_r(json_encode($response));
     return false;
 }
+
 
 $sql = "SELECT * FROM withdrawals WHERE user_id='$user_id' AND status = 0";
 $db->sql($sql);
