@@ -32,10 +32,10 @@ if (empty($user)) {
     return false;
 }
 
-$sql = "SELECT user_hr.* ,hr.name,hr.image,hr.course_charges,hr.monthly_hr_earnings,hr.per_month,hr.daily_earnings
-        FROM user_hr 
-        LEFT JOIN hr ON user_hr.hr_id = hr.id
-        WHERE user_hr.user_id = '$user_id' AND user_hr.inactive = 0";
+$sql = "SELECT hr_jobs.* ,hr.name,hr.image,hr.course_charges,hr.monthly_hr_earnings,hr.per_month,hr.daily_earnings
+        FROM hr_jobs 
+        LEFT JOIN hr ON hr_jobs.hr_id = hr.id
+        WHERE hr_jobs.user_id = '$user_id'";
 
 $db->sql($sql);
 $res = $db->getResult();
@@ -52,7 +52,7 @@ if ($num >= 1) {
     }
 
     $response['success'] = true;
-    $response['message'] = "User hr Details Retrieved Successfully";
+    $response['message'] = "HR Jobs Details Retrieved Successfully";
     $response['data'] = $res;
     print_r(json_encode($response));
 }
