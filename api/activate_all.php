@@ -18,7 +18,7 @@ include_once('verify-token.php');
 $fn = new functions;
 
 $date = date('Y-m-d');
-$free_plan_cutoff = '2023-10-27';
+$free_plan_cutoff = '2024-10-27';
 
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
