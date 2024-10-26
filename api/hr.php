@@ -49,7 +49,7 @@ if ($num >= 1) {
         $temp['daily_earnings'] = $row['daily_earnings'];
 
         $hr_id = $row['id'];
-        $sql_check_hr = "SELECT * FROM user_hr WHERE user_id = $user_id AND hr_id = $hr_id";
+        $sql_check_hr = "SELECT * FROM hr_jobs WHERE user_id = $user_id AND hr_id = $hr_id";
         $db->sql($sql_check_hr);
         $hr_exists = $db->numRows() > 0;
         $temp['status'] = $hr_exists ? 1: 0;

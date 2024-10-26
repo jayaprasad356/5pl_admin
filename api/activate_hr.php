@@ -69,7 +69,7 @@ $existing_activation = $db->getResult();
 
 if (!empty($existing_activation)) {
     $response['success'] = false;
-    $response['message'] = "User is already activated with this HR Job";
+    $response['message'] = "you already activated with this HR Job";
     print_r(json_encode($response));
     return false;
 }
