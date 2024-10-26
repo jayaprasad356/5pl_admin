@@ -48,6 +48,22 @@ if ($num >= 1) {
     if (empty($user_details['recharge_url'])) {
         $user_details['recharge_url'] = $default_recharge_url;
     }
+       // Check if all specific plans (2, 3, 4, 5) are activated
+       $required_plan_ids = [2, 3, 4, 5];
+       $sql_check_plans = "SELECT plan_id FROM user_plan WHERE user_id = $user_id AND plan_id IN (" . implode(',', $required_plan_ids) . ")";
+       $db->sql($sql_check_plans);
+       $active_plans = $db->getResult();
+   
+       $all_required_plans_active = (count($active_plans) == count($required_plan_ids));
+   
+       // Check if the hr job with hr_id 1 is active for the user
+       $sql_check_hr_job = "SELECT hr_id FROM hr_jobs WHERE user_id = $user_id AND hr_id = 1";
+       $db->sql($sql_check_hr_job);
+       $active_hr_job = $db->getResult();
+       $hr_job_active = (count($active_hr_job) > 0);
+   
+       // Determine all_plan_activated status
+       $user_details['all_plan_activated'] = ($all_required_plans_active && $hr_job_active) ? 1 : 0;
 
     // Fetch associated plans for the user
     $sql_plans = "SELECT plan.name FROM user_plan
@@ -71,6 +87,7 @@ if ($num >= 1) {
         $user_details['plan_activated'][$user_plan['name']] = 1;
     }
 
+    // Final response
     $response['success'] = true;
     $response['message'] = "User Details Retrieved Successfully";
     $response['data'] = array($user_details);
