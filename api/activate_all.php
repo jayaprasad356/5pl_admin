@@ -18,7 +18,6 @@ include_once('verify-token.php');
 $fn = new functions;
 
 $date = date('Y-m-d');
-$free_plan_cutoff = '2024-10-27';
 
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
@@ -29,7 +28,6 @@ if (empty($_POST['user_id'])) {
 
 $user_id = $db->escapeString($_POST['user_id']);
 
-// Fetch user data, including registration date
 $sql = "SELECT * FROM users WHERE id = $user_id";
 $db->sql($sql);
 $user = $db->getResult();
@@ -41,18 +39,8 @@ if (empty($user)) {
     return false;
 }
 
-$registered_datetime = $user[0]['registered_datetime'];
 $recharge = $user[0]['recharge'];
 
-// Check if the user is eligible for free plans based on registration date
-if ($registered_datetime > $free_plan_cutoff) {
-    $response['success'] = false;
-    $response['message'] = "Free plans are only available for users registered on or before $free_plan_cutoff";
-    print_r(json_encode($response));
-    return false;
-}
-
-// Fetch relevant plans
 $sql = "SELECT * FROM plan WHERE id IN (2, 3, 4, 5)";
 $db->sql($sql);
 $plans = $db->getResult();
@@ -106,6 +94,7 @@ foreach ($plans_to_activate as $plan) {
     $plan_id = $plan['id'];
     $price = -$plan['price'];
 
+
     $sql = "UPDATE users SET recharge = recharge + $price, total_recharge = total_recharge + $price WHERE id = $user_id";
     $db->sql($sql);
 
@@ -133,7 +122,7 @@ $db->sql($sql_user);
 $res_user = $db->getResult();
 
 $response['success'] = true;
-$response['message'] = "Congratulations! Your Free Plans have been activated successfully";
+$response['message'] = "Congratulations Your Free Plans have beed activated successfully";
 $response['data'] = $res_user;
 
 print_r(json_encode($response));
