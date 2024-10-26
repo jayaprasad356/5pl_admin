@@ -241,6 +241,12 @@ if ($_SESSION['role'] == 'admin') {
                         <span>Bulk Recharge</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="free_plan_image.php">
+                    <i class="fas fa-image"></i>
+                        <span>Free Plan Image</span>
+                    </a>
+                </li>
                 <?php } ?>
                 <li class="treeview">
                     <a href="recharge.php">

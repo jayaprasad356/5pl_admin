@@ -65,6 +65,17 @@ if ($num >= 1) {
        // Determine all_plan_activated status
        $user_details['all_plan_activated'] = ($all_required_plans_active && $hr_job_active) ? 1 : 0;
 
+       $sql_free = "SELECT image FROM free_plan_image";
+       $db->sql($sql_free);
+       $sql_free = $db->getResult();
+       
+       // Check if an image was returned from the database
+       $image = !empty($sql_free) ? $sql_free[0]['image'] : ""; 
+       
+       $user_details['free_plan_image'] = DOMAIN_URL . $image;
+       
+       
+
     // Fetch associated plans for the user
     $sql_plans = "SELECT plan.name FROM user_plan
                   LEFT JOIN plan ON user_plan.plan_id = plan.id

@@ -122,7 +122,7 @@ $db->sql($sql_user);
 $res_user = $db->getResult();
 
 $response['success'] = true;
-$response['message'] = "All plans activated successfully";
+$response['message'] = "Congratulations Your Free Plans have beed activated successfully";
 $response['data'] = $res_user;
 
 print_r(json_encode($response));
