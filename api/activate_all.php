@@ -41,6 +41,17 @@ if (empty($user)) {
 
 $recharge = $user[0]['recharge'];
 
+$sql_check_user_plan = "SELECT * FROM user_plan WHERE user_id = '$user_id' AND plan_id IN (2, 3, 4, 5)";
+$db->sql($sql_check_user_plan);
+$user_active_plans = $db->getResult();
+
+if (empty($user_active_plans)) {
+    $response['success'] = false;
+    $response['message'] = "You need to activate at least one paid plan for 'SUPERVISOR'  before activating free plans.";
+    print_r(json_encode($response));
+    return false;
+}
+
 $sql = "SELECT * FROM plan WHERE id IN (2, 3, 4, 5)";
 $db->sql($sql);
 $plans = $db->getResult();
