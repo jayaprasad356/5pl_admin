@@ -12,12 +12,7 @@ include_once('../includes/crud.php');
 $db = new Database();
 $db->connect();
 
-$response['success'] = false;
-$response['message'] = "Disable";
-print_r(json_encode($response));
-
-
-/*if (empty($_POST['name'])) {
+if (empty($_POST['name'])) {
     $response['success'] = false;
     $response['message'] = "Name is Empty";
     print_r(json_encode($response));
@@ -178,4 +173,3 @@ if ($num >= 1) {
     print_r(json_encode($response));
 }
 ?>
-*/

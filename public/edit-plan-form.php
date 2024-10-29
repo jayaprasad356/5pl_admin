@@ -24,8 +24,9 @@ if (isset($_POST['btnEdit'])) {
 	$price = $db->escapeString(($_POST['price']));
 	$type = $db->escapeString(($_POST['type']));
 	$min_refers = $db->escapeString(($_POST['min_refers']));
+	$earnings_30days = $db->escapeString(trim($_POST['earnings_30days']));
     
-		$sql_query = "UPDATE plan SET name='$name',description='$description',demo_video='$demo_video',daily_codes='$daily_codes',per_code_cost='$per_code_cost',price='$price',daily_earnings='$daily_earnings',type = '$type',min_refers = '$min_refers' WHERE id =  $ID";
+		$sql_query = "UPDATE plan SET name='$name',description='$description',demo_video='$demo_video',daily_codes='$daily_codes',per_code_cost='$per_code_cost',price='$price',daily_earnings='$daily_earnings',type = '$type',min_refers = '$min_refers','earnings_30days' = '$earnings_30days' WHERE id =  $ID";
 		$db->sql($sql_query);
 		$result = $db->getResult();             
 		if (!empty($result)) {
@@ -157,6 +158,10 @@ if (isset($_POST['btnCancel'])) { ?>
 								<div class="col-md-3">
 									<label for="exampleInputEmail1">Min Refers</label><i class="text-danger asterik">*</i>
 									<input type="number" class="form-control" name="min_refers" value="<?php echo $res[0]['min_refers']; ?>">
+								</div>
+								<div class="col-md-3">
+									<label for="exampleInputEmail1">30Days Earnings</label><i class="text-danger asterik">*</i>
+									<input type="number" class="form-control" name="earnings_30days" value="<?php echo $res[0]['earnings_30days']; ?>">
 								</div>
                             </div>	 
 						  </div> 

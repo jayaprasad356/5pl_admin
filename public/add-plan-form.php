@@ -16,6 +16,7 @@ if (isset($_POST['btnAdd'])) {
         $price = $db->escapeString(($_POST['price']));
         $type = $db->escapeString(($_POST['type']));
         $min_refers = $db->escapeString(($_POST['min_refers']));
+        $earnings_30days = $db->escapeString(($_POST['earnings_30days']));
    
         $error = array();
        
@@ -37,6 +38,9 @@ if (isset($_POST['btnAdd'])) {
         if (empty($per_code_cost)) {
             $error['per_code_cost'] = " <span class='label label-danger'>Required!</span>";
         }
+        if (empty($earnings_30days)) {
+            $error['earnings_30days'] = " <span class='label label-danger'>Required!</span>";
+        }
   
        
             // Validate and process the image upload
@@ -56,10 +60,10 @@ if (isset($_POST['btnAdd'])) {
         }
 
         $upload_image = 'upload/images/' . $filename;
-        $sql = "INSERT INTO plan (name,description,image,demo_video,daily_codes,per_code_cost,price,daily_earnings,type,min_refers) VALUES ('$name','$description','$upload_image','$demo_video','$daily_codes','$per_code_cost','$price','$daily_earnings','$type','$min_refers')";
+        $sql = "INSERT INTO plan (name,description,image,demo_video,daily_codes,per_code_cost,price,daily_earnings,type,min_refers,earnings_30days) VALUES ('$name','$description','$upload_image','$demo_video','$daily_codes','$per_code_cost','$price','$daily_earnings','$type','$min_refers','$earnings_30days')";
         $db->sql($sql);
     } else {
-            $sql_query = "INSERT INTO plan (name,description,demo_video,daily_codes,per_code_cost,price,daily_earnings,type,min_refers) VALUES ('$name','$description','$demo_video','$daily_codes','$per_code_cost','$price','$daily_earnings','$type','$min_refers')";
+            $sql_query = "INSERT INTO plan (name,description,demo_video,daily_codes,per_code_cost,price,daily_earnings,type,min_refers,earnings_30days) VALUES ('$name','$description','$demo_video','$daily_codes','$per_code_cost','$price','$daily_earnings','$type','$min_refers','$earnings_30days')";
             $db->sql($sql);
         }
             $result = $db->getResult();
@@ -152,6 +156,10 @@ if (isset($_POST['btnAdd'])) {
                                  <div class='col-md-3'>
                                     <label for="exampleInputtitle">Min Refers</label> <i class="text-danger asterik">*</i>
                                     <input type="number" class="form-control" name="min_refers">
+                                </div>
+                                <div class='col-md-3'>
+                                    <label for="exampleInputtitle">Monthly Earnings</label> <i class="text-danger asterik">*</i>
+                                    <input type="number" class="form-control" name="monthly_earings">
                                 </div>
                             </div> 
                         </div> 

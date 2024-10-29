@@ -26,6 +26,7 @@
                                     <th  data-field="demo_video" data-sortable="true">Demo Video</th>
                                     <th  data-field="daily_codes" data-sortable="true">Daily Codes</th>
                                     <th  data-field="daily_earnings" data-sortable="true">Daily Earnings</th>
+                                    <th  data-field="earnings_30days" data-sortable="true">30Days Earnings</th>
                                     <th  data-field="per_code_cost" data-sortable="true">Per Code Cost</th>
                                     <th  data-field="price" data-sortable="true">Price</th>
                                     <th  data-field="type" data-sortable="true">Type</th>
