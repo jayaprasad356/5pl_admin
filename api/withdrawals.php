@@ -107,9 +107,13 @@ if ($amount >= $min_withdrawal) {
             return false;
         } else {
 
-            $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`balance`,`status`,`datetime`) VALUES ('$user_id','$amount',$balance,0,'$datetime')";
+            $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`balance`,`status`,`datetime`) VALUES ('$user_id','$amount',$balance,1,'$datetime')";
             $db->sql($sql);
-            $sql = "UPDATE users SET balance = balance - '$amount',total_withdrawal = total_withdrawal + '$amount' WHERE id='$user_id'";
+            
+            $sql_insert_transaction = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$user_id', '$amount', '$datetime', 'recharge_wallet')";
+            $db->sql($sql_insert_transaction);
+
+            $sql = "UPDATE users SET balance = balance - '$amount',total_withdrawal = total_withdrawal + '$amount', recharge = recharge + '$amount' WHERE id='$user_id'";
             $db->sql($sql);
 
             $sql = "SELECT * FROM withdrawals WHERE user_id = $user_id";
