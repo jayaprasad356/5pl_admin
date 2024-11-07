@@ -63,6 +63,17 @@ if (empty($hr)) {
 $course_charges = -$hr[0]['course_charges'];
 $datetime = date('Y-m-d H:i:s');
 
+$sql_check_user_plan = "SELECT * FROM user_plan WHERE user_id = '$user_id' AND plan_id IN (2, 3, 4, 5)";
+$db->sql($sql_check_user_plan);
+$user_active_plans = $db->getResult();
+
+if (empty($user_active_plans)) {
+    $response['success'] = false;
+    $response['message'] = "You need to activate at least one paid plan for 'SUPERVISOR'  before activating free plans.";
+    print_r(json_encode($response));
+    return false;
+}
+
 $sql_check_activation = "SELECT * FROM hr_jobs WHERE user_id = '$user_id' AND hr_id = '$hr_id'";
 $db->sql($sql_check_activation);
 $existing_activation = $db->getResult();
