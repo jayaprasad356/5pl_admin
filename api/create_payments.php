@@ -54,7 +54,7 @@ $product_ids = json_decode($_POST['product_id'], true);
 
 if (in_array(31904496, $product_ids)) {
     // The API URL
-    $url = 'https://smartidmaker.graymatterworks.com/api/cp.php';
+    $url = 'https://admin.aidiapp.in/api/cp.php';
 
     // Initialize cURL session
     $ch = curl_init();
