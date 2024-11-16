@@ -17,8 +17,11 @@ $db->connect();
 
 $datetime = date('Y-m-d H:i:s');
 
+$response['success'] = false;
+$response['message'] = "Disable";
+echo json_encode($response);
 
-if (empty($_POST['user_id'])) {
+/*if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User ID is Empty";
     echo json_encode($response);
@@ -141,3 +144,4 @@ if($wallet_type == 'balance'){
  
 echo json_encode($response);
 ?>
+*/
