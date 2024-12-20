@@ -6,12 +6,9 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-
 include_once('../includes/crud.php');
 $db = new Database();
 $db->connect();
-
-
 if (empty($_POST['mobile'])) {
     $response['success'] = false;
     $response['message'] = "Mobile is Empty";
@@ -42,24 +39,17 @@ if (empty($_POST['datetime'])) {
     print_r(json_encode($response));
     return false;
 }
-
 $datetime = $db->escapeString($_POST['datetime']);
 $order_id = $db->escapeString($_POST['order_id']);
 $amount = $db->escapeString($_POST['amount']);
 $mobile = $db->escapeString($_POST['mobile']);
 $product_id = $db->escapeString($_POST['product_id']);
-
-
 $product_ids = json_decode($_POST['product_id'], true);
-
 if (in_array(31904496, $product_ids)) {
-
     $url = 'https://admin.aidiapp.in/api/cp.php';
     $ch = curl_init();
-
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, true);
-
     $data = [
         'datetime' => $datetime,
         'order_id' => $order_id,
@@ -68,7 +58,6 @@ if (in_array(31904496, $product_ids)) {
         'product_id' => $product_id
     ];
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
     $response = curl_exec($ch);
 }
 else{
@@ -99,9 +88,7 @@ else{
         $sql_query = "UPDATE users SET recharge = recharge + $amount, total_recharge = total_recharge + $amount WHERE id = $ID";
         $db->sql($sql_query);
     }
+    $response['success'] = true;
+    $response['message'] = "Order added Successfully";
+    print_r(json_encode($response));
 }
-
-$response['success'] = true;
-$response['message'] = "Order added Successfully";
-print_r(json_encode($response));
-
