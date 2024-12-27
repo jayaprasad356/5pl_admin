@@ -45,8 +45,24 @@ $amount = $db->escapeString($_POST['amount']);
 $mobile = $db->escapeString($_POST['mobile']);
 $product_id = $db->escapeString($_POST['product_id']);
 $product_ids = json_decode($_POST['product_id'], true);
+
 if (in_array(31904496, $product_ids)) {
     $url = 'https://admin.aidiapp.in/api/cp.php';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    $data = [
+        'datetime' => $datetime,
+        'order_id' => $order_id,
+        'amount' => $amount,
+        'mobile' => $mobile,
+        'product_id' => $product_id
+    ];
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    $response = curl_exec($ch);
+}
+if (in_array(32099322, $product_ids)) {
+    $url = 'https://solarpe.org/admin_v1/api/cp.php';
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, true);
@@ -88,7 +104,5 @@ else{
         $sql_query = "UPDATE users SET recharge = recharge + $amount, total_recharge = total_recharge + $amount WHERE id = $ID";
         $db->sql($sql_query);
     }
-    $response['success'] = true;
-    $response['message'] = "Order added Successfully";
     print_r(json_encode($response));
 }
