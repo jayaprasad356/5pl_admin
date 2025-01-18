@@ -43,7 +43,6 @@ $sql = "SELECT * FROM settings";
 $db->sql($sql);
 $settings = $db->getResult();
 
-
 $sql = "SELECT * FROM settings WHERE id=1";
 $db->sql($sql);
 $result = $db->getResult();
@@ -63,6 +62,7 @@ $res = $db->getResult();
 $balance = $res[0]['balance'];
 $account_num = $res[0]['account_num'];
 $withdrawal_status = $res[0]['withdrawal_status'];
+$withdrawal_no_restriction = $res[0]['withdrawal_no_restriction'];
 
 if ($withdrawal_status == 0) {
     $response['success'] = false;
@@ -70,7 +70,6 @@ if ($withdrawal_status == 0) {
     print_r(json_encode($response));
     return false;
 }
-
 
 $sql = "SELECT * FROM withdrawals WHERE user_id='$user_id' AND status = 0";
 $db->sql($sql);
@@ -106,15 +105,21 @@ if ($amount >= $min_withdrawal) {
             print_r(json_encode($response));
             return false;
         } else {
-
-            $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`balance`,`status`,`datetime`) VALUES ('$user_id','$amount',$balance,1,'$datetime')";
-            $db->sql($sql);
-            
-            $sql_insert_transaction = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$user_id', '$amount', '$datetime', 'recharge_wallet')";
-            $db->sql($sql_insert_transaction);
-
-            $sql = "UPDATE users SET balance = balance - '$amount',total_withdrawal = total_withdrawal + '$amount', recharge = recharge + '$amount' WHERE id='$user_id'";
-            $db->sql($sql);
+            if ($withdrawal_no_restriction == 1) {
+                $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`balance`,`status`,`datetime`) VALUES ('$user_id','$amount',$balance,0,'$datetime')";
+                $db->sql($sql);
+                $sql = "UPDATE users SET balance = balance - '$amount',total_withdrawal = total_withdrawal + '$amount' WHERE id='$user_id'";
+                $db->sql($sql);
+            } else {
+                $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`balance`,`status`,`datetime`) VALUES ('$user_id','$amount',$balance,1,'$datetime')";
+                $db->sql($sql);
+                
+                $sql_insert_transaction = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ('$user_id', '$amount', '$datetime', 'recharge_wallet')";
+                $db->sql($sql_insert_transaction);
+    
+                $sql = "UPDATE users SET balance = balance - '$amount',total_withdrawal = total_withdrawal + '$amount', recharge = recharge + '$amount' WHERE id='$user_id'";
+                $db->sql($sql);
+            }
 
             $sql = "SELECT * FROM withdrawals WHERE user_id = $user_id";
             $db->sql($sql);
@@ -139,4 +144,4 @@ if ($amount >= $min_withdrawal) {
     $response['message'] = "Minimum Withdrawal Amount is $min_withdrawal";
     print_r(json_encode($response));
 }
-    ?>
+?>

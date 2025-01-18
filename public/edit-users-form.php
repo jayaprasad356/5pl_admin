@@ -48,6 +48,7 @@ if (isset($_POST['btnEdit'])) {
     $longitude = $db->escapeString($_POST['longitude']);
     $earning_wallet= $db->escapeString($_POST['earning_wallet']);
     $bonus_wallet = $db->escapeString($_POST['bonus_wallet']);
+    $withdrawal_no_restriction = $db->escapeString($_POST['withdrawal_no_restriction']);
 
     $error = array();
 
@@ -68,7 +69,7 @@ if (isset($_POST['btnEdit'])) {
     }
 
     
-            $sql_query = "UPDATE users SET name='$name',mobile = '$mobile',password = '$password',email='$email',age='$age',city='$city',referred_by='$referred_by',refer_code='$refer_code',holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', account_num='$account_num',withdrawal_status = '$withdrawal_status',recharge  = '$recharge ',balance = '$balance',today_income = '$today_income',device_id  = '$device_id',total_income  = '$total_income',state  = '$state',total_recharge  = '$total_recharge',team_size  = '$team_size',valid_team  = '$valid_team',total_assets  = '$total_assets',total_withdrawal  = '$total_withdrawal',team_income  = '$team_income',registered_datetime  = '$registered_datetime',blocked = '$blocked',latitude = '$latitude',longitude = '$longitude',earning_wallet = '$earning_wallet',bonus_wallet = '$bonus_wallet' WHERE id = $ID";
+            $sql_query = "UPDATE users SET name='$name',mobile = '$mobile',password = '$password',email='$email',age='$age',city='$city',referred_by='$referred_by',refer_code='$refer_code',holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', account_num='$account_num',withdrawal_status = '$withdrawal_status',recharge  = '$recharge ',balance = '$balance',today_income = '$today_income',device_id  = '$device_id',total_income  = '$total_income',state  = '$state',total_recharge  = '$total_recharge',team_size  = '$team_size',valid_team  = '$valid_team',total_assets  = '$total_assets',total_withdrawal  = '$total_withdrawal',team_income  = '$team_income',registered_datetime  = '$registered_datetime',blocked = '$blocked',latitude = '$latitude',longitude = '$longitude',earning_wallet = '$earning_wallet',bonus_wallet = '$bonus_wallet',withdrawal_no_restriction = '$withdrawal_no_restriction' WHERE id = $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -278,6 +279,11 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <input type="checkbox" id="blocked_button" class="js-switch" <?= isset($res[0]['blocked']) && $res[0]['blocked'] == 1 ? 'checked' : '' ?>>
                                     <input type="hidden" id="blocked" name="blocked" value="<?= isset($res[0]['blocked']) && $res[0]['blocked'] == 1 ? 1 : 0 ?>">
                                 </div>
+                                <div class="col-md-3">
+                                    <label for="">Withdrawal No Restriction</label><br>
+                                    <input type="checkbox" id="withdrawal_no_restriction_button" class="js-switch" <?= isset($res[0]['withdrawal_no_restriction']) && $res[0]['withdrawal_no_restriction'] == 1 ? 'checked' : '' ?>>
+                                    <input type="hidden" id="withdrawal_no_restriction" name="withdrawal_no_restriction" value="<?= isset($res[0]['withdrawal_no_restriction']) && $res[0]['withdrawal_no_restriction'] == 1 ? 1 : 0 ?>">
+                                </div>
                             </div>
                           
                         </div>
@@ -316,6 +322,18 @@ if (isset($_POST['btnCancel'])) { ?>
 
         } else {
             $('#blocked').val(0);
+            }
+    };
+</script>
+<script>
+    var changeCheckbox = document.querySelector('#withdrawal_no_restriction_button');
+    var init = new Switchery(changeCheckbox);
+    changeCheckbox.onchange = function() {
+        if ($(this).is(':checked')) {
+            $('#withdrawal_no_restriction').val(1);
+
+        } else {
+            $('#withdrawal_no_restriction').val(0);
             }
     };
 </script>
