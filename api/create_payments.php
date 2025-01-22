@@ -76,33 +76,33 @@ if (in_array(32099322, $product_ids)) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     $response = curl_exec($ch);
 }
-else{
-    $sql = "SELECT * FROM `payments` WHERE order_id = '$order_id'";
-    $db->sql($sql);
-    $res = $db->getResult();
-    if ($res) {
-        $response['success'] = false;
-        $response['message'] = "Order Id already exists";
-        print_r(json_encode($response));
-        return false;
-    }
-    $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
-    $db->sql($sql);
-    $user = $db->getResult();
-    if (empty($user)) {
-        $sql = "INSERT INTO `payments` (order_id, product_id, mobile, amount, datetime, claim) VALUES ('$order_id','$product_id','$mobile', '$amount', '$datetime', 0)";
-        $db->sql($sql);
-        $res = $db->getResult();
-    }else{
-        $sql = "INSERT INTO `payments` (order_id, product_id, mobile, amount, datetime, claim) VALUES ('$order_id','$product_id','$mobile', '$amount', '$datetime', 1)";
-        $db->sql($sql);
-        $res = $db->getResult();
-        $ID = $user[0]['id'];
-        $type = 'recharge';
-        $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$ID', '$amount', '$datetime', '$type')";
-        $db->sql($sql);
-        $sql_query = "UPDATE users SET recharge = recharge + $amount, total_recharge = total_recharge + $amount WHERE id = $ID";
-        $db->sql($sql_query);
-    }
-    print_r(json_encode($response));
-}
+// else{
+//     $sql = "SELECT * FROM `payments` WHERE order_id = '$order_id'";
+//     $db->sql($sql);
+//     $res = $db->getResult();
+//     if ($res) {
+//         $response['success'] = false;
+//         $response['message'] = "Order Id already exists";
+//         print_r(json_encode($response));
+//         return false;
+//     }
+//     $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
+//     $db->sql($sql);
+//     $user = $db->getResult();
+//     if (empty($user)) {
+//         $sql = "INSERT INTO `payments` (order_id, product_id, mobile, amount, datetime, claim) VALUES ('$order_id','$product_id','$mobile', '$amount', '$datetime', 0)";
+//         $db->sql($sql);
+//         $res = $db->getResult();
+//     }else{
+//         $sql = "INSERT INTO `payments` (order_id, product_id, mobile, amount, datetime, claim) VALUES ('$order_id','$product_id','$mobile', '$amount', '$datetime', 1)";
+//         $db->sql($sql);
+//         $res = $db->getResult();
+//         $ID = $user[0]['id'];
+//         $type = 'recharge';
+//         $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`) VALUES ('$ID', '$amount', '$datetime', '$type')";
+//         $db->sql($sql);
+//         $sql_query = "UPDATE users SET recharge = recharge + $amount, total_recharge = total_recharge + $amount WHERE id = $ID";
+//         $db->sql($sql_query);
+//     }
+//     print_r(json_encode($response));
+// }
