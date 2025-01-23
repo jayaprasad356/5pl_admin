@@ -1,5 +1,3 @@
-
-
 <?php
 header('Access-Control-Allow-Origin: *');
 header("Content-Type: application/json");
@@ -45,6 +43,14 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 
 if ($num == 1) {
+    // User exists, check if blocked
+    if ($res[0]['blocked'] == 1) {
+        $response['success'] = false;
+        $response['message'] = "You are blocked";
+        echo json_encode($response);
+        return false;
+    }
+
     // User exists, check for device_id
     $sql_query = "UPDATE users SET device_id = '$device_id' WHERE mobile = '$mobile' AND device_id = ''";
     $db->sql($sql_query);
@@ -75,3 +81,4 @@ if ($num == 1) {
 }
 
 echo json_encode($response);
+?>
