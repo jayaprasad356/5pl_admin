@@ -62,7 +62,7 @@ if (in_array(31904496, $product_ids)) {
     $response = curl_exec($ch);
 }
 if (in_array(32099322, $product_ids)) {
-    $url = 'https://solarpe.org/admin_v1/api/cp.php';
+    $url = 'https://solarpe.org/main_controlv3/api/cp.php';
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, true);
